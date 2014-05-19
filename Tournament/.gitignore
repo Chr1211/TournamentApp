@@ -1,0 +1,22 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+*.classpath
+/META-INF
+.project
+.settings
+.projects
+RemoteSystemsTempFiles
+.metadata
+.DS_Store
+/bin
