@@ -10,9 +10,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		//Initial Commit
-		//2nd commit
-		//3rd Commit 
+		//test Sigh
 	}
 
 	@Override
