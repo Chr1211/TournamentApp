@@ -1,4 +1,4 @@
-package dateUtil;
+package sum.dateUtil;
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;

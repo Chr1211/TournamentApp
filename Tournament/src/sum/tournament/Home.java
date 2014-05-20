@@ -1,4 +1,6 @@
-package com.example.tournament;
+package sum.tournament;
+
+import sum.tournament.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,9 +17,6 @@ public class Home extends Activity{
 		setContentView(R.layout.home);
 		
 		initialize();
-		
-		Intent i = getIntent();
-		playerName.setText(i.getStringExtra("NAME"));
 	}
 	private void initialize() {
 //		playerName = (TextView)findViewById(R.id.tv_homeName);

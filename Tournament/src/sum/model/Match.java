@@ -1,4 +1,4 @@
-package com.example.model;
+package sum.model;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -7,21 +7,15 @@ import java.util.List;
 
 public class Match {
 
-	private List<Player> players = new ArrayList<Player>();
+	private List<Player> playerList;
 	private Player winner;
-	private Timestamp timestamp;
 	private boolean isDone;
 
-	public Match(List<Player> players) {
+	public Match() {
 		super();
-		this.players = players;
+		this.playerList = new ArrayList<Player>();
 		this.winner = null;
-		this.timestamp = new Timestamp(System.currentTimeMillis());
 		this.isDone = false;
-	}
-
-	public List<Player> getPlayers() {
-		return players;
 	}
 
 	public Player getWinner() {
@@ -32,15 +26,15 @@ public class Match {
 		this.winner = winner;
 	}
 
-	public Date getTimestamp() {
-		return timestamp;
-	}
-
 	public boolean isDone() {
 		return isDone;
 	}
 
 	public void setDone(boolean isDone) {
 		this.isDone = isDone;
+	}
+	
+	public List<Player> getPlayers(){
+		return playerList;
 	}
 }
