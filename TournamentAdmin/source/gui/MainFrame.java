@@ -56,6 +56,8 @@ public class MainFrame extends JFrame {
 		JButton btnAdministrerTurnering = new JButton("Manage tournament");
 		btnAdministrerTurnering.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ManageTournamentFrame mtf = new ManageTournamentFrame();
+				mtf.setVisible(true);
 			}
 		});
 		btnAdministrerTurnering.setBounds(12, 51, 173, 25);
@@ -74,6 +76,8 @@ public class MainFrame extends JFrame {
 		JButton btnAdministrerBrugere = new JButton("Manage users");
 		btnAdministrerBrugere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ManageUsersFrame muf = new ManageUsersFrame();
+				muf.setVisible(true);
 			}
 		});
 		btnAdministrerBrugere.setBounds(12, 195, 173, 25);
@@ -86,6 +90,16 @@ public class MainFrame extends JFrame {
 		JButton btnLogUd = new JButton("Log out");
 		btnLogUd.setBounds(364, 248, 97, 25);
 		contentPane.add(btnLogUd);
+		
+		JButton btnProfileSettings = new JButton("Profile settings");
+		btnProfileSettings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ProfilesettingsFrame psf = new ProfilesettingsFrame();
+				psf.setVisible(true);
+			}
+		});
+		btnProfileSettings.setBounds(12, 131, 173, 25);
+		contentPane.add(btnProfileSettings);
 		btnLogUd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//IKKE SIKKERT DET ER HIDE DER SKAL BRUGES:

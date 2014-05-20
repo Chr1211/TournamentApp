@@ -16,6 +16,7 @@ public class CreateTournamentFrame extends JFrame {
 	private JTextField nametxt;
 	private JTextField startDatetxt;
 	private JTextField maxplayerstxt;
+	private JTextField textField;
 
 	/**
 	 * Launch the application.
@@ -53,7 +54,7 @@ public class CreateTournamentFrame extends JFrame {
 		contentPane.add(lblStartDate);
 		
 		JLabel lblMaxPlayers = new JLabel("Max players:");
-		lblMaxPlayers.setBounds(12, 71, 74, 16);
+		lblMaxPlayers.setBounds(12, 100, 74, 16);
 		contentPane.add(lblMaxPlayers);
 		
 		JButton btnBack = new JButton("Back");
@@ -79,9 +80,18 @@ public class CreateTournamentFrame extends JFrame {
 		startDatetxt.setColumns(10);
 		
 		maxplayerstxt = new JTextField();
-		maxplayerstxt.setBounds(94, 71, 198, 22);
+		maxplayerstxt.setBounds(94, 97, 198, 22);
 		contentPane.add(maxplayerstxt);
 		maxplayerstxt.setColumns(10);
+		
+		JLabel lblEndDate = new JLabel("End date:");
+		lblEndDate.setBounds(12, 71, 74, 16);
+		contentPane.add(lblEndDate);
+		
+		textField = new JTextField();
+		textField.setBounds(94, 68, 198, 22);
+		contentPane.add(textField);
+		textField.setColumns(10);
 	}
 
 }
