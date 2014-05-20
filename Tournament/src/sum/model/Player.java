@@ -1,4 +1,4 @@
-package com.example.model;
+package sum.model;
 
 public class Player {
 

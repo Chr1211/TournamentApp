@@ -1,4 +1,4 @@
-package com.example.model;
+package sum.model;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -8,16 +8,16 @@ public class Tournament {
 
 	private String name;
 	private List<Player> playerList;
-	private List<Match> matches;
-	private Timestamp timestamp;
+	private List<Match> matchList;
+	private String startDate;
 	private Player gamemaster;
 
 	public Tournament(String name, Player gamemaster) {
 		super();
 		this.name = name;
 		this.playerList = new ArrayList<Player>();
-		this.matches = new ArrayList<Match>();
-		this.timestamp = new Timestamp(System.currentTimeMillis());
+		this.matchList = new ArrayList<Match>();
+		this.startDate = null;
 		this.gamemaster = gamemaster;
 	}
 
@@ -29,10 +29,6 @@ public class Tournament {
 		this.name = name;
 	}
 
-	public Timestamp getTimestamp() {
-		return timestamp;
-	}
-
 	public Player getGamemaster() {
 		return gamemaster;
 	}
@@ -41,4 +37,19 @@ public class Tournament {
 		this.gamemaster = gamemaster;
 	}
 
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public List<Match> getMatches() {
+		return matchList;
+	}
+
+	public List<Player> getPlayers() {
+		return playerList;
+	}
 }

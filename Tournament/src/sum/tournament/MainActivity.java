@@ -1,4 +1,6 @@
-package com.example.tournament;
+package sum.tournament;
+
+import sum.tournament.R;
 
 import android.os.Bundle;
 import android.app.Activity;
