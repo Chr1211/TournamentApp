@@ -2,17 +2,17 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import javax.swing.JTextArea;
 
 public class MainFrame extends JFrame {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2292455670620751734L;
 	private JPanel contentPane;
 
 	/**
@@ -36,11 +36,65 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 491, 331);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JButton btnOpretNyTurnering = new JButton("Create new tournament");
+		btnOpretNyTurnering.setBounds(12, 13, 173, 25);
+		contentPane.add(btnOpretNyTurnering);
+		btnOpretNyTurnering.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//TODO
+				CreateTournamentFrame ctf = new CreateTournamentFrame();
+				ctf.setVisible(true);
+			}
+		});
+
+		JButton btnAdministrerTurnering = new JButton("Manage tournament");
+		btnAdministrerTurnering.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAdministrerTurnering.setBounds(12, 51, 173, 25);
+		contentPane.add(btnAdministrerTurnering);
+
+		JButton btnEksisterendeTurneringer = new JButton("Existing tournaments");
+		btnEksisterendeTurneringer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ExistingTournamentsFrame etf = new ExistingTournamentsFrame();
+				etf.setVisible(true);
+			}
+		});
+		btnEksisterendeTurneringer.setBounds(12, 89, 173, 25);
+		contentPane.add(btnEksisterendeTurneringer);
+
+		JButton btnAdministrerBrugere = new JButton("Manage users");
+		btnAdministrerBrugere.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnAdministrerBrugere.setBounds(12, 195, 173, 25);
+		contentPane.add(btnAdministrerBrugere);
+
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(244, 11, 217, 209);
+		contentPane.add(textArea);
+
+		JButton btnLogUd = new JButton("Log out");
+		btnLogUd.setBounds(364, 248, 97, 25);
+		contentPane.add(btnLogUd);
+		btnLogUd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//IKKE SIKKERT DET ER HIDE DER SKAL BRUGES:
+				MainFrame.this.hide();
+
+			}
+		});
 	}
+
+
 
 }
