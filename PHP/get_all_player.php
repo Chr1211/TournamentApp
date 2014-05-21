@@ -29,7 +29,7 @@ if (mysql_num_rows($result) > 0) {
         $player["email"] = $row["email"];
         $player["name"] = $row["name"];
         $player["phoneNumber"] = $row["phoneNumber"];
-      //  $player["password"] = $row["password"];
+        $player["password"] = $row["password"];
         $player["admin"] = $row["admin"];
 
 
