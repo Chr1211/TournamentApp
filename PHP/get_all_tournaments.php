@@ -30,13 +30,16 @@ if (mysql_num_rows($result) > 0) {
         $tournament["startDate"] = $row["startDate"];
         $tournament["endDate"] = $row["endDate"];
         $players = mysql_query("SELECT * FROM Player") or die(mysql_error());    
-        $player= array();
+        $allPlayers=array();
         while($rowPlayer = mysql_fetch_array($players)) {
+            $player= array();
             $player["name"] = $rowPlayer["name"];
             $player["email"] = $rowPlayer["email"];
             $player["phoneNumber"] = $rowPlayer["phoneNumber"];
             $player["password"] = $rowPlayer["password"];
             $player["admin"] = $rowPlayer["admin"];
+            
+            array_push($response["allPlayers"], $player);
         } 
         $tournament["players"]=$player;
       
