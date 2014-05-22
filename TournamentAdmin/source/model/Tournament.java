@@ -5,20 +5,55 @@ import java.util.Date;
 import java.util.List;
 
 public class Tournament {
-	public String name;
+	public String name, startDate, endDate, specialRule;
 	public List<Player> players = new ArrayList<Player>();
-	public Date timestamp;
 	public List<Match> matches = new ArrayList<Match>();
 	public List<Player> gamemasters = new ArrayList<Player>();
+	public int maxPlayers;
 
-	public Tournament(String name, List<Player> players, Date timestamp,
-			List<Match> matches, List<Player> gamemasters) {
+	public Tournament(String name, List<Player> players, String startDate, String endDate, String specialRule,
+			List<Match> matches, List<Player> gamemasters, int maxPlayers) {
 		super();
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.specialRule = specialRule;
 		this.name = name;
 		this.players = players;
-		this.timestamp = timestamp;
 		this.matches = matches;
 		this.gamemasters = gamemasters;
+		this.maxPlayers = maxPlayers;
+	}
+
+	public String getSpecialRule() {
+		return specialRule;
+	}
+
+	public void setSpecialRule(String specialRule) {
+		this.specialRule = specialRule;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public int getMaxPlayers() {
+		return maxPlayers;
+	}
+
+	public void setMaxPlayers(int maxPlayers) {
+		this.maxPlayers = maxPlayers;
 	}
 
 	public String getName() {
@@ -37,13 +72,6 @@ public class Tournament {
 		this.players = players;
 	}
 
-	public Date getTimestamp() {
-		return timestamp;
-	}
-
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
-	}
 
 	public List<Match> getMatches() {
 		return matches;

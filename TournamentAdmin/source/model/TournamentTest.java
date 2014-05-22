@@ -16,7 +16,7 @@ public class TournamentTest {
 	
 	@Test
 	public void testName(){
-		Tournament t = new Tournament("HenningAllStars", null, null, null, null);
+		Tournament t = new Tournament("HenningAllStars", null, null, null, null,null, null, 1);
 		assertEquals("it fits!", "HenningAllStars", t.getName());
 	}
 	
@@ -24,7 +24,7 @@ public class TournamentTest {
 	public void addPlayers(){
 		Player p = new Player("Henning", null, null, null, false);
 		List<Player> list = new ArrayList<Player>();
-		Tournament t = new Tournament(null, list, null, null, null);
+		Tournament t = new Tournament(null, list, null, null, null,null, list, 1);
 		assertEquals(0, t.getPlayers().size());
 		t.getPlayers().add(p);
 		assertEquals(1, t.getPlayers().size());
@@ -46,7 +46,7 @@ public class TournamentTest {
 		list.add(p2);
 		Match m = new Match(list, false, false, null);
 		List<Match> matches = new ArrayList<Match>();
-		Tournament t = new Tournament(null, list, null, matches, list);
+		Tournament t = new Tournament(null, list, null, null, null, matches, list,1);
 		assertEquals("fits!", 0, t.getMatches().size());
 		t.getMatches().add(m);
 		assertEquals("fits!", 1, t.getMatches().size());
@@ -55,10 +55,16 @@ public class TournamentTest {
 	public void addGameMasters(){
 		Player p = new Player("Henning", null, null, null, false);
 		List<Player> list = new ArrayList<Player>();
-		Tournament t = new Tournament(null, null, null, null, list);
+		Tournament t = new Tournament(null, null, null, null, null, null, list,1);
 		assertEquals(0, t.getGamemasters().size());
 		t.getGamemasters().add(p);
 		assertEquals(1, t.getGamemasters().size());
+	}
+	
+	public void testSpecialRule(){
+		Tournament t = new Tournament(null, null, null, null, null, null, null, 0);
+		assertNull(t.getSpecialRule());
+		assertNotNull(t.getSpecialRule());
 	}
 	
 	
