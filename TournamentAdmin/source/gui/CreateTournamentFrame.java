@@ -78,7 +78,6 @@ public class CreateTournamentFrame extends JFrame {
 		btnCreate.setBounds(439, 271, 97, 25);
 		contentPane.add(btnCreate);
 		btnCreate.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
