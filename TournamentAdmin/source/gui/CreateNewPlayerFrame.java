@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,6 +15,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import service.Service;
+
 public class CreateNewPlayerFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -21,11 +24,14 @@ public class CreateNewPlayerFrame extends JFrame {
 	private JTextField emailtxt;
 	private JTextField phoneNumbertxt;
 	private JTextField passwordtxt;
+	private JCheckBox chckbxAdmin;
+	private static Service service;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		service = Service.getInstance();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -65,7 +71,7 @@ public class CreateNewPlayerFrame extends JFrame {
 		lblPassword.setBounds(12, 100, 70, 16);
 		contentPane.add(lblPassword);
 		
-		JCheckBox chckbxAdmin = new JCheckBox("Admin");
+		final JCheckBox chckbxAdmin = new JCheckBox("Admin");
 		chckbxAdmin.setBounds(12, 125, 113, 25);
 		contentPane.add(chckbxAdmin);
 		
@@ -103,8 +109,20 @@ public class CreateNewPlayerFrame extends JFrame {
 		btnCreatePlayer.setBounds(301, 217, 119, 25);
 		contentPane.add(btnCreatePlayer);
 		btnCreatePlayer.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
+				try {
+					service.createNewPlayer(emailtxt.getText(), nametxt.getText(), phoneNumbertxt.getText(), passwordtxt.getText(), false);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
+				emailtxt.setText("");
+				nametxt.setText("");
+				phoneNumbertxt.setText("");
+				passwordtxt.setText("");
+				chckbxAdmin.setSelected(false);
 			}
 		});
 	}
