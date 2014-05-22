@@ -10,8 +10,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import service.Service;
+import sun.security.util.Password;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 
 public class LoginFrame extends JFrame {
 
@@ -22,11 +26,13 @@ public class LoginFrame extends JFrame {
 	private JPanel contentPane;
 	private JTextField emailtxt;
 	private JTextField pwtxt;
+	private static Service service;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		service = Service.getInstance();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -50,13 +56,24 @@ public class LoginFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO 
-				MainFrame mf = new MainFrame();
-				mf.setVisible(true);
+				// TODO
+				try {
+					if (service.logInPlayer(emailtxt.getText(), pwtxt.getText())) {
+						emailtxt.setText("");
+						pwtxt.setText("");
+						MainFrame mf = new MainFrame();
+						mf.setVisible(true);
+					} else {
+						emailtxt.setText("");
+						pwtxt.setText("");
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 		});
@@ -81,12 +98,11 @@ public class LoginFrame extends JFrame {
 		contentPane.add(pwtxt);
 		pwtxt.setColumns(10);
 
-//		if(emailtxt.getText().equals("") && pwtxt.getText().equals("")){
-//			btnLogin.setEnabled(false);
-//		} else {
-//			btnLogin.setEnabled(true);
-//		}
-
+		// if(emailtxt.getText().equals("") && pwtxt.getText().equals("")){
+		// btnLogin.setEnabled(false);
+		// } else {
+		// btnLogin.setEnabled(true);
+		// }
 
 	}
 }

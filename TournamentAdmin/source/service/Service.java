@@ -31,5 +31,9 @@ public class Service {
 		Player player = new Player(name, email, phoneNumber, password, admin);
 		dao.createPlayer(player);
 	}
+	
+	public boolean logInPlayer(String email, String password) throws SQLException{
+		return dao.logInPlayer(email, password);
+	}
 
 }
