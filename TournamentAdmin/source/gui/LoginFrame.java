@@ -16,6 +16,7 @@ import sun.security.util.Password;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.awt.Color;
 
 public class LoginFrame extends JFrame {
 
@@ -56,11 +57,21 @@ public class LoginFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		final JLabel lblLoginError = new JLabel("Login Error: Wrong Email or Password!");
+		lblLoginError.setForeground(Color.RED);
+		lblLoginError.setBounds(78, 127, 243, 16);
+		contentPane.add(lblLoginError);
+		lblLoginError.setVisible(false);
+		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
+			
+			
+			
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO
 				try {
+					lblLoginError.setVisible(false);
 					if (service.logInPlayer(emailtxt.getText(), pwtxt.getText())) {
 						emailtxt.setText("");
 						pwtxt.setText("");
@@ -69,6 +80,8 @@ public class LoginFrame extends JFrame {
 					} else {
 						emailtxt.setText("");
 						pwtxt.setText("");
+						lblLoginError.setVisible(true);
+						
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -79,6 +92,7 @@ public class LoginFrame extends JFrame {
 		});
 		btnLogin.setBounds(113, 153, 97, 25);
 		contentPane.add(btnLogin);
+		
 
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setBounds(78, 69, 56, 16);
@@ -97,6 +111,7 @@ public class LoginFrame extends JFrame {
 		pwtxt.setBounds(146, 95, 116, 22);
 		contentPane.add(pwtxt);
 		pwtxt.setColumns(10);
+		
 
 		// if(emailtxt.getText().equals("") && pwtxt.getText().equals("")){
 		// btnLogin.setEnabled(false);
