@@ -21,8 +21,8 @@ public class Service {
 		return instance;
 	}
 	
-	public void createNewTournament(String name, String startDate, String endDate,String maxPlayers) throws SQLException{
-		Tournament tournament = new Tournament(name, null, startDate, endDate, null, null, Integer.parseInt(maxPlayers));
+	public void createNewTournament(String name, String startDate, String endDate,String specialRule, String maxPlayers) throws SQLException{
+		Tournament tournament = new Tournament(name, null, startDate, endDate, specialRule, null, null, Integer.parseInt(maxPlayers));
 		dao.createTournament(tournament);
 	}
 

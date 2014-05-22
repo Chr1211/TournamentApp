@@ -60,7 +60,7 @@ public class MainFrame extends JFrame {
 				mtf.setVisible(true);
 			}
 		});
-		btnAdministrerTurnering.setBounds(12, 51, 173, 25);
+		btnAdministrerTurnering.setBounds(12, 94, 173, 25);
 		contentPane.add(btnAdministrerTurnering);
 
 		JButton btnEksisterendeTurneringer = new JButton("Existing tournaments");
@@ -70,7 +70,7 @@ public class MainFrame extends JFrame {
 				etf.setVisible(true);
 			}
 		});
-		btnEksisterendeTurneringer.setBounds(12, 89, 173, 25);
+		btnEksisterendeTurneringer.setBounds(12, 132, 173, 25);
 		contentPane.add(btnEksisterendeTurneringer);
 
 		JButton btnAdministrerBrugere = new JButton("Manage users");
@@ -80,7 +80,7 @@ public class MainFrame extends JFrame {
 				muf.setVisible(true);
 			}
 		});
-		btnAdministrerBrugere.setBounds(12, 195, 173, 25);
+		btnAdministrerBrugere.setBounds(12, 231, 173, 25);
 		contentPane.add(btnAdministrerBrugere);
 
 		JTextArea textArea = new JTextArea();
@@ -90,6 +90,11 @@ public class MainFrame extends JFrame {
 		JButton btnLogUd = new JButton("Log out");
 		btnLogUd.setBounds(364, 248, 97, 25);
 		contentPane.add(btnLogUd);
+		btnLogUd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
 		
 		JButton btnProfileSettings = new JButton("Profile settings");
 		btnProfileSettings.addActionListener(new ActionListener() {
@@ -98,17 +103,18 @@ public class MainFrame extends JFrame {
 				psf.setVisible(true);
 			}
 		});
-		btnProfileSettings.setBounds(12, 131, 173, 25);
+		btnProfileSettings.setBounds(12, 170, 173, 25);
 		contentPane.add(btnProfileSettings);
-		btnLogUd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//IKKE SIKKERT DET ER HIDE DER SKAL BRUGES:
-				MainFrame.this.hide();
-
+		
+		JButton btnCreateNewPlayer = new JButton("Create new Player");
+		btnCreateNewPlayer.setBounds(12, 56, 173, 25);
+		contentPane.add(btnCreateNewPlayer);
+		btnCreateNewPlayer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CreateNewPlayerFrame cnpf = new CreateNewPlayerFrame();
+				cnpf.setVisible(true);
 			}
 		});
+		
 	}
-
-
-
 }

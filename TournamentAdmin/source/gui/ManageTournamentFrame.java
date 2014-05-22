@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -89,6 +91,11 @@ public class ManageTournamentFrame extends JFrame {
 		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(12, 217, 97, 25);
 		contentPane.add(btnBack);
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		
 		JButton btnSaveChanges = new JButton("Save Changes");
 		btnSaveChanges.setBounds(132, 217, 113, 25);

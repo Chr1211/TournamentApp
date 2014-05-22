@@ -59,6 +59,7 @@ public class ManageUsersFrame extends JFrame {
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 		btnBack.setBounds(12, 217, 97, 25);

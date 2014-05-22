@@ -55,6 +55,7 @@ public class ExistingTournamentsFrame extends JFrame {
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 		btnBack.setBounds(12, 293, 97, 25);
