@@ -29,6 +29,7 @@ if (mysql_num_rows($result) > 0) {
         $tournament["name"] = $row["name"];
         $tournament["startDate"] = $row["startDate"];
         $tournament["endDate"] = $row["endDate"];
+	 $tournament["maxPlayers"] = $row["maxPlayers"];
         
         $sql="SELECT P.email, P.name, P.phoneNumber, P.admin, TP.gamemaster FROM  `Player` P,  `TournamentPlayer` TP WHERE P.email = TP.email
                 AND TP.name = '";
@@ -42,7 +43,7 @@ if (mysql_num_rows($result) > 0) {
         }
         $tournament["players"]=$allPlayers;
         
-        $sqlMatch="SELECT * FROM Match WHERE tournamentName = '";
+        $sqlMatch="SELECT * FROM `Match` WHERE tournamentName ='";
         $sqlMatch.=$row["name"];
         $sqlMatch.="'";
         
