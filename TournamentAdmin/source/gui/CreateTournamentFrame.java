@@ -2,6 +2,9 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
+import service.Service;
+
 public class CreateTournamentFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -17,11 +22,13 @@ public class CreateTournamentFrame extends JFrame {
 	private JTextField startDatetxt;
 	private JTextField maxplayerstxt;
 	private JTextField textField;
+	private static Service service;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		service = Service.getInstance();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -64,8 +71,24 @@ public class CreateTournamentFrame extends JFrame {
 		JButton btnCreate = new JButton("Create");
 		btnCreate.setBounds(439, 271, 97, 25);
 		contentPane.add(btnCreate);
+		btnCreate.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					service.createNewTournament(nametxt.getText(), startDatetxt.getText(), textField.getText(), maxplayerstxt.getText());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				nametxt.setText("");
+				startDatetxt.setText("");
+				textField.setText("");
+				maxplayerstxt.setText("");
+			}
+		});
 		
-		JButton btnAddAllGamemasters = new JButton("Add All Gamemasters");
+		JButton btnAddAllGamemasters = new JButton("Add Alt Gamemasters");
 		btnAddAllGamemasters.setBounds(191, 271, 162, 25);
 		contentPane.add(btnAddAllGamemasters);
 		
