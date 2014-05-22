@@ -35,23 +35,24 @@ if (mysql_num_rows($result) > 0) {
             $sql .=$row["name"];
             $sql .="'";
         
-        
         $players = mysql_query($sql) or die(mysql_error());    
         $allPlayers=array();
         while($rowPlayer = mysql_fetch_assoc($players)) {
-          //  $player= array();
-            //$player["name"] = $rowPlayer["name"];
-            //$player["email"] = $rowPlayer["email"];
-            //$player["phoneNumber"] = $rowPlayer["phoneNumber"];
-            //$player["password"] = $rowPlayer["password"];
-            //$player["admin"] = $rowPlayer["admin"];
-             $allPlayers[] = $rowPlayer;
-            //array_push($response["allPlayers"], $player);
-             
-              
-        } 
+             $allPlayers[] = $rowPlayer;       
+        }
         $tournament["players"]=$allPlayers;
-      
+        
+        $sqlMatch="SELECT * FROM Match WHERE tournamentName = '";
+        $sqlMatch.=$row["name"];
+        $sqlMatch.="'";
+        
+        $matches=mysql_query($sqlMatch) or die(mysql_error());
+        $allMatches=array();
+        while($rowMatch=mysql_fetch_assoc($matches)) {
+            $allMatches[]=$rowMatch;
+        }
+        $tournament["matches"]=$allMatches;
+        
         // push single player into final response array
         array_push($response["tournaments"], $tournament);
     }
