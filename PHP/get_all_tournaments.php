@@ -29,8 +29,14 @@ if (mysql_num_rows($result) > 0) {
         $tournament["name"] = $row["name"];
         $tournament["startDate"] = $row["startDate"];
         $tournament["endDate"] = $row["endDate"];
-
-        $players = mysql_query("SELECT * FROM Player") or die(mysql_error());    
+        
+        $sql="SELECT P.email, P.name, P.phoneNumber, P.admin, TP.gamemaster FROM  `Player` P,  `TournamentPlayer` TP WHERE P.email = TP.email
+                AND TP.name = '";
+            $sql .=$row("name");
+            $sql .="'";
+        
+        
+        $players = mysql_query($sql) or die(mysql_error());    
         $allPlayers=array();
         while($rowPlayer = mysql_fetch_assoc($players)) {
           //  $player= array();
@@ -41,6 +47,8 @@ if (mysql_num_rows($result) > 0) {
             //$player["admin"] = $rowPlayer["admin"];
              $allPlayers[] = $rowPlayer;
             //array_push($response["allPlayers"], $player);
+             
+              
         } 
         $tournament["players"]=$allPlayers;
       
