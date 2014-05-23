@@ -19,8 +19,7 @@ $result = mysql_query("SELECT * FROM Tournament") or die(mysql_error());
 
 // check for empty result
 if (mysql_num_rows($result) > 0) {
-    // looping through all results
-    // players node
+
     $response["tournaments"] = array();
     
     while ($row = mysql_fetch_array($result)) {
@@ -31,7 +30,7 @@ if (mysql_num_rows($result) > 0) {
         $tournament["endDate"] = $row["endDate"];
 	 $tournament["maxPlayers"] = $row["maxPlayers"];
         
-        $sql="SELECT P.email, P.name, P.phoneNumber, P.admin, TP.gamemaster FROM  `Player` P,  `TournamentPlayer` TP WHERE P.email = TP.email
+        $sql="SELECT P.email, P.name, P.phoneNumber, P.admin, TP.gamemaster, TP.active FROM  `Player` P,  `TournamentPlayer` TP WHERE P.email = TP.email
                 AND TP.name = '";
             $sql .=$row["name"];
             $sql .="'";
