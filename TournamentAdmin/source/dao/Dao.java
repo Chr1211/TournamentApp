@@ -20,11 +20,20 @@ public class Dao {
 	private PreparedStatement prepStatement = null;
 	private Player currentlyLoggedIn;
 	private ResultSet resultSet = null;
-	private ArrayList<Player> players = new ArrayList<Player>();
+	private ArrayList<Player> players;
 	private Player loggedInPlayer = null;
+	private static Dao daoInstance;
 	
-	public Dao() {
-		// TODO Auto-generated constructor stub
+	
+	private Dao() {
+		this.players = new ArrayList<Player>();
+	}
+	
+	public static Dao getInstance(){
+		if(daoInstance == null){
+			daoInstance = new Dao();
+		}
+		return daoInstance;
 	}
 	
 	public void createTournament(Tournament tournament) throws SQLException{
@@ -92,13 +101,18 @@ public class Dao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		connect.close();
+		prepStatement.close();
 		players = new ArrayList<Player>();
 		return foundPlayer;
 	}
 	
 	private void writePlayer(ResultSet resultset) throws SQLException{
 		Player foundPlayer = null;
+		
 		while(resultset.next()){
+			System.out.println("derp");
 			String email = resultset.getString("email");
 			String name = resultset.getString("name");
 			String phoneNumber = resultset.getString("phoneNumber");
@@ -113,6 +127,47 @@ public class Dao {
 		}
 	}
 	
+	public void loadPlayers() throws SQLException{
+		players=new ArrayList<>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt", "SumProjekt","4semester");
+			statement= connect.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM sumProjekt.Player");
+			writePlayer(resultSet);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		connect.close();
+		statement.close();
+	}
+	
+	public ArrayList<Player> getPlayers() throws SQLException{
+		System.out.println(players);
+		return players;
+	}
+	
+	public void updatePlayer(String name, String email, String phoneNumber, String password) throws SQLException{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt", "SumProjekt","4semester");
+			prepStatement = connect.prepareStatement("UPDATE sumProjekt.Player SET email=?, name=?, phoneNumber=?, password=? WHERE email =?");
+			prepStatement.setString(1, email);
+			prepStatement.setString(2, name);
+			prepStatement.setString(3, phoneNumber);
+			prepStatement.setString(4, password);
+			prepStatement.setString(5, email);
+			prepStatement.executeUpdate();
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		connect.close();
+		prepStatement.close();
+		
+	}
 	
 	
 

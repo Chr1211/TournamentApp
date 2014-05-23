@@ -77,6 +77,9 @@ public class LoginFrame extends JFrame {
 						pwtxt.setText("");
 						MainFrame mf = new MainFrame();
 						mf.setVisible(true);
+//						ManageUsersFrame muf = new ManageUsersFrame();
+//						muf.setVisible(true);
+						LoginFrame.this.dispose();
 					} else {
 						emailtxt.setText("");
 						pwtxt.setText("");
@@ -112,12 +115,5 @@ public class LoginFrame extends JFrame {
 		contentPane.add(pwtxt);
 		pwtxt.setColumns(10);
 		
-
-		// if(emailtxt.getText().equals("") && pwtxt.getText().equals("")){
-		// btnLogin.setEnabled(false);
-		// } else {
-		// btnLogin.setEnabled(true);
-		// }
-
 	}
 }

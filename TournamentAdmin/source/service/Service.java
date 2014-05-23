@@ -1,6 +1,7 @@
 package service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import dao.Dao;
 import model.Player;
@@ -12,7 +13,7 @@ public class Service {
 	private Dao dao;
 	
 	private Service() {
-		this.dao = new Dao();
+		this.dao = Dao.getInstance();
 	}
 	
 	public static Service getInstance(){
@@ -34,6 +35,18 @@ public class Service {
 	
 	public boolean logInPlayer(String email, String password) throws SQLException{
 		return dao.logInPlayer(email, password);
+	}
+	
+	public ArrayList<Player> getAllPlayers() throws SQLException{
+		return dao.getPlayers();
+	}
+	
+	public void loadPlayers() throws SQLException{
+		dao.loadPlayers();
+	}
+	
+	public void updatePlayer(String name, String email, String phoneNumber, String password) throws SQLException{
+		dao.updatePlayer(name, email, phoneNumber, password);
 	}
 
 }

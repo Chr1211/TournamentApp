@@ -52,6 +52,8 @@ public class Player {
 		this.admin = admin;
 	}
 	
-	
+	public String toString(){
+		return "Name: " + name + "Email " + email;
+	}
 
 }

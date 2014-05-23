@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,14 +12,18 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
+import service.Service;
+
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
+	private static Service service;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		service = Service.getInstance();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -76,8 +81,17 @@ public class MainFrame extends JFrame {
 		JButton btnAdministrerBrugere = new JButton("Manage users");
 		btnAdministrerBrugere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ManageUsersFrame muf = new ManageUsersFrame();
-				muf.setVisible(true);
+//				ManageUsersFrame muf;
+				try {
+//					service.loadPlayers();
+					ManageUsersFrame muf = new ManageUsersFrame();
+					muf.setVisible(true);
+					
+					} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 		btnAdministrerBrugere.setBounds(12, 231, 173, 25);
