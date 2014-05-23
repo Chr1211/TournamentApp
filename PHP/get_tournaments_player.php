@@ -16,28 +16,31 @@ require_once __DIR__ . '/db_connect.php';
 $db = new DB_CONNECT();
 
 // check for post data
-if (isset($_GET["email"])) {
+
+if (isset($_GET['email'])) {
     $email = $_GET['email'];
     
     // get a player from player table
-    $result = mysql_query( "SELECT T.name, T.startDate, T.endDate, T.maxPlayers, T.variables FROM  `TournamentPlayer` TP,  `Tournament` T WHERE TP.name = T.name AND TP.email =  $email");
+    $result = mysql_query( "SELECT T.name, T.startDate, T.endDate, T.maxPlayers, T.variables FROM  `TournamentPlayer` TP,  `Tournament` T WHERE TP.name = T.name AND TP.email ='$email'");
    
     if (!empty($result)) {
         // check for empty result
         if (mysql_num_rows($result) > 0) {
+		$response["tournaments"] = array();
 
-            $result = mysql_fetch_array($result);
-
-            $tournament= array();
-            while($row=mysql_fetch_assoc($result)) {
-                $tournament[]=$row;
+            while($row=mysql_fetch_array($result)) {
+                $tournament=array();
+		  $tournament["name"] = $row["name"];
+      		  $tournament["startDate"] = $row["startDate"];
+      		  $tournament["endDate"] = $row["endDate"];
+ 		array_push($response["tournaments"], $tournament);
             }
             
-            array_push($response["result"], $tournament);
+           
             $response["success"] = 1;
 
             
-            // $response["result"] = tournament;
+            // $response["tournaments"] = $tournament;
 
             
 
@@ -46,7 +49,7 @@ if (isset($_GET["email"])) {
         } else {
             // no playerfound
             $response["success"] = 0;
-            $response["message"] = "No player found";
+            $response["message"] = "No player found indeni";
 
             // echo no users JSON
             echo json_encode($response);
@@ -54,8 +57,8 @@ if (isset($_GET["email"])) {
     } else {
         // no playerfound
         $response["success"] = 0;
-        $response["message"] = "No playerfound";
-
+        $response["message"] = $email;
+		
         // echo no users JSON
         echo json_encode($response);
     }
