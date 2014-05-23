@@ -21,12 +21,14 @@ public class Dao {
 	private Player currentlyLoggedIn;
 	private ResultSet resultSet = null;
 	private ArrayList<Player> players;
+	private ArrayList<Tournament> tournaments;
 	private Player loggedInPlayer = null;
 	private static Dao daoInstance;
 	
 	
 	private Dao() {
 		this.players = new ArrayList<Player>();
+		this.tournaments = new ArrayList<Tournament>();
 	}
 	
 	public static Dao getInstance(){
@@ -146,6 +148,10 @@ public class Dao {
 	public ArrayList<Player> getPlayers() throws SQLException{
 		System.out.println(players);
 		return players;
+	}
+	
+	public ArrayList<Tournament> getTournaments(){
+		return tournaments;
 	}
 	
 	public void updatePlayer(String name, String email, String phoneNumber, String password) throws SQLException{

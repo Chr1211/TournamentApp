@@ -41,6 +41,10 @@ public class Service {
 		return dao.getPlayers();
 	}
 	
+	public ArrayList<Tournament> getAllTournaments(){
+		return dao.getTournaments();
+	}
+	
 	public void loadPlayers() throws SQLException{
 		dao.loadPlayers();
 	}
