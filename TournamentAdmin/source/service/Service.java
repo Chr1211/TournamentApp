@@ -26,6 +26,9 @@ public class Service {
 	public void createNewTournament(String name, String startDate, String endDate,String specialRule, String maxPlayers) throws SQLException{
 		Tournament tournament = new Tournament(name, null, startDate, endDate, specialRule, null, null, Integer.parseInt(maxPlayers));
 		dao.createTournament(tournament);
+		dao.getLoggedInPlayer().getEmail();
+		addPlayerToTournament(dao.getLoggedInPlayer().getEmail(), name, 1);
+		
 	}
 	
 	public void createNewPlayer(String email, String name, String phoneNumber, String password, boolean admin) throws SQLException{
@@ -47,6 +50,10 @@ public class Service {
 	
 	public void loadPlayers() throws SQLException{
 		dao.loadPlayers();
+	}
+	
+	public void loadTournaments() throws SQLException{
+		dao.loadTournaments();
 	}
 	
 	public void updatePlayer(String name, String email, String phoneNumber, String password) throws SQLException{

@@ -27,10 +27,10 @@ public class Tournament {
 		this.matches = matches;
 		this.gamemasters = gamemasters;
 		this.maxPlayers = maxPlayers;
-		service = Service.getInstance();
-		this.loggedInPlayer = service.getLoggedInPlayer();
-		gamemasters.add(loggedInPlayer);
-		service.addPlayerToTournament(loggedInPlayer.getEmail(), this.name, 1);
+//		service = Service.getInstance();
+//		this.loggedInPlayer = service.getLoggedInPlayer();
+////		gamemasters.add(loggedInPlayer);
+//		service.addPlayerToTournament(loggedInPlayer.getEmail(), this.name, 1);
 	}
 
 	public String getSpecialRule() {

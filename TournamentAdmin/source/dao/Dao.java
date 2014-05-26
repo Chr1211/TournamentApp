@@ -94,9 +94,11 @@ public class Dao {
 			prepStatement.setString(2, password);
 			resultSet = prepStatement.executeQuery();
 			writePlayer(resultSet);
+			System.out.println(players.size());
 			if(players.size() > 0){
 				loggedInPlayer = players.get(0);
 				foundPlayer = true;
+				System.out.println(loggedInPlayer);
 			}
 			
 		} catch (ClassNotFoundException e) {

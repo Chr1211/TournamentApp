@@ -56,60 +56,87 @@ public class ManageTournamentFrame extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
 	 */
-	public ManageTournamentFrame() {
+	public ManageTournamentFrame() throws SQLException {
 		service = Service.getInstance();
-		//BACKEND loadTournaments();
+		service.loadTournaments();
 		tournaments = service.getAllTournaments();
-		
-		
+
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 479, 315);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		JLabel lblTournaments = new JLabel("Tournaments:");
 		lblTournaments.setBounds(12, 13, 101, 16);
 		contentPane.add(lblTournaments);
-		
+
 		JLabel lblName = new JLabel("Name:");
 		lblName.setBounds(272, 0, 56, 16);
 		contentPane.add(lblName);
-		
+
 		nametxt = new JTextField();
 		nametxt.setBounds(272, 13, 137, 22);
 		contentPane.add(nametxt);
 		nametxt.setColumns(10);
-		
+
 		JLabel lblStartDate = new JLabel("Start Date:");
 		lblStartDate.setBounds(272, 43, 82, 16);
 		contentPane.add(lblStartDate);
-		
+
 		startdatetxt = new JTextField();
 		startdatetxt.setBounds(272, 58, 137, 22);
 		contentPane.add(startdatetxt);
 		startdatetxt.setColumns(10);
-		
+
 		JLabel lblEndDate = new JLabel("End Date:");
 		lblEndDate.setBounds(272, 90, 68, 16);
 		contentPane.add(lblEndDate);
-		
+
 		endDatetxt = new JTextField();
 		endDatetxt.setBounds(272, 108, 137, 22);
 		contentPane.add(endDatetxt);
 		endDatetxt.setColumns(10);
-		
+
 		JLabel lblMaxPlayers = new JLabel("Max players:");
 		lblMaxPlayers.setBounds(272, 131, 82, 16);
 		contentPane.add(lblMaxPlayers);
-		
+
 		maxplayerstxt = new JTextField();
 		maxplayerstxt.setBounds(272, 151, 137, 22);
 		contentPane.add(maxplayerstxt);
 		maxplayerstxt.setColumns(10);
-		
+
+		model = new DefaultListModel<Tournament>();
+
+		list = new JList(model);
+		list.setBounds(12, 42, 198, 153);
+		contentPane.add(list);
+		JScrollPane scrollPane = new JScrollPane();
+		list.add(scrollPane);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				//TODO
+				//				Set tournament info i textfields!
+				Tournament t = (Tournament) list.getSelectedValue();
+				if(t != null){
+					nametxt.setText(t.getName());
+					startdatetxt.setText(t.getStartDate());
+					endDatetxt.setText(t.getEndDate());
+					maxplayerstxt.setText(t.getMaxPlayers() + "");
+					specialRuletxt.setText(t.getSpecialRule());
+				}
+			}
+		});
+
+
 		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(12, 232, 97, 25);
 		contentPane.add(btnBack);
@@ -118,7 +145,7 @@ public class ManageTournamentFrame extends JFrame {
 				dispose();
 			}
 		});
-		
+
 		JButton btnSaveChanges = new JButton("Save Changes");
 		btnSaveChanges.setBounds(169, 232, 113, 25);
 		contentPane.add(btnSaveChanges);
@@ -127,6 +154,8 @@ public class ManageTournamentFrame extends JFrame {
 				//TODO
 				try {
 					service.updateTournament(nametxt.getText(), startdatetxt.getText(), endDatetxt.getText(), Integer.parseInt(maxplayerstxt.getText()), specialRuletxt.getText());
+					updateJList();
+					ManageTournamentFrame.this.dispose();
 				} catch (NumberFormatException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -134,52 +163,35 @@ public class ManageTournamentFrame extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-//				Evt. dispose frame
-				updateJList();
+
 			}
 		});
-		
+
 		JButton btnAddPlayers = new JButton("Add Players");
 		btnAddPlayers.setBounds(312, 232, 137, 25);
 		contentPane.add(btnAddPlayers);
-		
-		model = new DefaultListModel<Tournament>();
-		
-		list = new JList(model);
-		list.setBounds(12, 42, 198, 153);
-		contentPane.add(list);
-		JScrollPane scrollPane = new JScrollPane();
-		list.add(scrollPane);
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
+
+
 		JLabel lblSpecialRule = new JLabel("Special Rule:");
 		lblSpecialRule.setBounds(272, 179, 82, 16);
 		contentPane.add(lblSpecialRule);
-		
+
 		specialRuletxt = new JTextField();
 		specialRuletxt.setBounds(272, 197, 137, 22);
 		contentPane.add(specialRuletxt);
 		specialRuletxt.setColumns(10);
-		
-		list.addListSelectionListener(new ListSelectionListener() {
-			
-			@Override
-			public void valueChanged(ListSelectionEvent arg0) {
-				//TODO
-//				Set tournament info i textfields!
-			}
-		});
-		
+
+
 		updateJList();
 	}
-	
+
 	public void updateJList(){
 		model = new DefaultListModel<Tournament>();
 		for(Tournament tournament : tournaments){
 			model.addElement(tournament);
 		}
 		list.setModel(model);
-		
+
 		list.setSelectedIndex(0);
 	}
 }
