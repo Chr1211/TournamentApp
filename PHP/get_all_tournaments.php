@@ -53,7 +53,7 @@ if (mysql_num_rows($result) > 0) {
         }
         $tournament["matches"]=$allMatches;
         
-        // push single player into final response array
+        // push results into final response array
         array_push($response["tournaments"], $tournament);
     }
     // success
