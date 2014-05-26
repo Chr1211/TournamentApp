@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
 					Toast.LENGTH_SHORT).show();
 
 			Intent intent = new Intent(MainActivity.this, Home.class);
-			intent.putExtra("NAME", ed_email.getText().toString());
+			intent.putExtra("EMAIL", ed_email.getText().toString());
 			startActivity(intent);
 
 		} else {
@@ -89,7 +89,6 @@ public class MainActivity extends Activity {
 		for(Player p : playerList){
 			Log.d("PLAYER",p.toString());
 		}
-		Log.d("EMAIL + PASSWORD" , sEmail + " " + sPassword);
 		while(!found && index < playerList.size()){
 			if(playerList.get(index).getEmail().equals(sEmail) && playerList.get(index).getPassword().equals(sPassword)){
 				
@@ -110,7 +109,7 @@ public class MainActivity extends Activity {
 
 	public void setFont() {
 		Typeface loadingType = Typeface.createFromAsset(this.getAssets(),
-				"DragonForcE.ttf");
+				"varsity_regular.ttf");
 		ed_email.setTypeface(loadingType);
 		ed_password.setTypeface(loadingType);
 		bt_login.setTypeface(loadingType);
