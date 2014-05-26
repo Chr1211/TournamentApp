@@ -61,8 +61,15 @@ public class MainFrame extends JFrame {
 		JButton btnAdministrerTurnering = new JButton("Manage tournament");
 		btnAdministrerTurnering.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ManageTournamentFrame mtf = new ManageTournamentFrame();
-				mtf.setVisible(true);
+//				ManageTournamentFrame mtf;
+				try {
+					ManageTournamentFrame mtf = new ManageTournamentFrame();
+					mtf.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 		btnAdministrerTurnering.setBounds(12, 94, 173, 25);

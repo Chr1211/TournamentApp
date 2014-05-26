@@ -17,15 +17,13 @@ $db = new DB_CONNECT();
 
 // check for post data
 
-if (isset($_GET['name'])) {
-    $name = $_GET['name'];
-    
+if (isset($_GET['email'])) {
+    $email = $_GET['email'];
     
     
     
     // get a player from player table
-    $result = mysql_query( "SELECT P1.MatchNumber, P1.emailWinner, P1.name as p1Name, P2.name as p2Name, P1.dato FROM (SELECT M.`MatchNumber` , M.`emailWinner`, P.name, M.`dato` FROM  `Match` M,  `Player` P WHERE P.email = M.`player1Email` AND M.tournamentName ='$name') AS P1 INNER JOIN (SELECT M.`MatchNumber` , P.name FROM  `Match` M,  `Player` P WHERE P.email = M.`player2Email` AND M.tournamentName ='$name') AS P2 ON P2.MatchNumber = P1.MatchNumber");
-    
+    $result = mysql_query("SELECT * FROM  `Match` WHERE  (`player1Email` ='$email' OR  `player2Email` =  '$email') AND done =0");
     
     if (!empty($result)) {
         // check for empty result
@@ -34,16 +32,26 @@ if (isset($_GET['name'])) {
 
             while($row=mysql_fetch_array($result)) {
                 $matches=array();
-		  $matches["p1Name"] = $row["p1Name"];
-      		  $matches["p2Name"] = $row["p2Name"];
-      		  $matches["dato"] = $row["dato"];
-		  $matches["MatchNumber"] = $row["MatchNumber"];
+                
+                $matches["tournamentName"] = $row["tournamentName"];
+                $matches["dato"]=$row["dato"];
 
-		  $winner = $row["emailWinner"];
-		$nameResult = mysql_query ("SELECT name FROM  `Player` WHERE  `email` LIKE  '$winner'");
-		$nameRow = mysql_fetch_array($nameResult);
-		$matches["winner"] = $nameRow["name"];
- 		array_push($response["matches"], $matches);
+                
+		$email1 = $row["player1Email"];
+      		$email2 = $row["player2Email"];
+                
+                
+                $name1 = mysql_query("SELECT name FROM  `Player` WHERE  `email` like '$email1'");
+                $name1Row=mysql_fetch_array($name1);
+                $matches["nameP1"]=$name1Row["name"];
+      		
+                $name2 = mysql_query("SELECT name FROM  `Player` WHERE  `email` like '$email2'");
+                $name2Row=mysql_fetch_array($name2);
+                $matches["nameP2"]=$name2Row["name"];
+                
+                
+                
+                array_push($response["matches"], $matches);
             }
             
            
