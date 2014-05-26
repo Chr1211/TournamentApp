@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.sun.org.apache.regexp.internal.REUtil;
-
 import model.Player;
 import model.Tournament;
 
@@ -18,10 +16,11 @@ public class Dao {
 	private Connection connect;
 	private Statement statement = null;
 	private PreparedStatement prepStatement = null;
-	private Player currentlyLoggedIn;
+	private Player currentlyLoggedIn = null;
 	private ResultSet resultSet = null;
 	private ArrayList<Player> players;
 	private ArrayList<Tournament> tournaments;
+	private ArrayList<Tournament> loggedInTournaments;
 	private Player loggedInPlayer = null;
 	private static Dao daoInstance;
 	
@@ -152,6 +151,21 @@ public class Dao {
 		}
 	}
 	
+	private void writeLoggedTournament(ResultSet resultSet) throws SQLException{
+		Tournament foundTournament = null;
+		while(resultSet.next()){
+			String name = resultSet.getString("name");
+			String startDate = resultSet.getString("startDate");
+			String endDate = resultSet.getString("endDate");
+			int maxPlayers = resultSet.getInt("maxPlayers");
+			String specialRule = resultSet.getString("variables");
+			
+			foundTournament = new Tournament(name, null, startDate, endDate, specialRule, null, null, maxPlayers);
+			loggedInTournaments.add(foundTournament);
+		}
+	}
+	
+	
 	public void loadPlayers() throws SQLException{
 		players=new ArrayList<Player>();
 		try {
@@ -250,6 +264,26 @@ public class Dao {
 		}
 		connect.close();
 		prepStatement.close();
+	}
+	
+	public void findLoggedInTournaments() throws SQLException{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt", "SumProjekt","4semester");
+			prepStatement = connect.prepareStatement("SELECT T.name, T.startDate, T.endDate, T.maxPlayers, T.variables FROM  `TournamentPlayer` TP,  `Tournament` T WHERE TP.name = T.name AND TP.email =? AND TP.gamemaster = 1");
+			prepStatement.setString(1, loggedInPlayer.getEmail());
+			resultSet = prepStatement.executeQuery();
+			writeLoggedTournament(resultSet);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		connect.close();
+		prepStatement.close();
+	}
+	
+	public ArrayList<Tournament> getAllLoggedInTournaments(){
+		return loggedInTournaments;
 	}
 	
 	

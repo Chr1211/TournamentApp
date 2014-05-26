@@ -71,5 +71,13 @@ public class Service {
 	public void addPlayerToTournament(String email, String name, int gamemaster) throws SQLException{
 		dao.addPlayerToTournament(email, name, gamemaster);
 	}
+	
+	public void loggedInTournaments() throws SQLException{
+		dao.findLoggedInTournaments();
+	}
+	
+	public ArrayList<Tournament> getAllLoggedTournaments(){
+		return dao.getAllLoggedInTournaments();
+	}
 
 }
