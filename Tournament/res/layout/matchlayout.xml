@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/homescreen"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_tournament_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tournament name"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <AbsoluteLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/bracket" />
+
+                <TextView
+                    android:id="@+id/tv_match1_p2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="10dp"
+                    android:layout_y="34dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_match2_p1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="10dp"
+                    android:layout_y="55dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_match2_p2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="10dp"
+                    android:layout_y="75dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_match3_p1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="10dp"
+                    android:layout_y="110dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_match3_p2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="10dp"
+                    android:layout_y="129dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_match4_p1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="10dp"
+                    android:layout_y="152dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_match4_p2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="10dp"
+                    android:layout_y="170dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_match6_p1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="95dp"
+                    android:layout_y="124dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_match6_p2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="95dp"
+                    android:layout_y="143dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_match5_p2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="95dp"
+                    android:layout_y="54dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_match1_p1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="10dp"
+                    android:layout_y="12dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_match5_p1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="95dp"
+                    android:layout_y="35dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_match7_p1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="178dp"
+                    android:layout_y="77dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_match7_p2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_x="177dp"
+                    android:layout_y="96dp"
+                    android:hint="no player"
+                    android:textSize="10dp" />
+            </AbsoluteLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+
+</LinearLayout>
