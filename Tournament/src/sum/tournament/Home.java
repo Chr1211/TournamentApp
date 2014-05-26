@@ -42,9 +42,9 @@ public class Home extends Activity {
 		actionBar.addTab(tabB);
 
 		Tab tabC = actionBar.newTab();
-		tabC.setText("Statistics");
-		tabC.setTabListener(new TabListener<LeaderboardFragment>(this, "Statistics",
-				LeaderboardFragment.class));
+		tabC.setText("Upcoming Games");
+		tabC.setTabListener(new TabListener<FutureGamesFragment>(this, "Upcoming Games",
+				FutureGamesFragment.class));
 		actionBar.addTab(tabC);
 
 		if (savedInstanceState != null) {
