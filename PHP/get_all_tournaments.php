@@ -19,8 +19,7 @@ $result = mysql_query("SELECT * FROM Tournament") or die(mysql_error());
 
 // check for empty result
 if (mysql_num_rows($result) > 0) {
-    // looping through all results
-    // players node
+
     $response["tournaments"] = array();
     
     while ($row = mysql_fetch_array($result)) {
@@ -29,29 +28,31 @@ if (mysql_num_rows($result) > 0) {
         $tournament["name"] = $row["name"];
         $tournament["startDate"] = $row["startDate"];
         $tournament["endDate"] = $row["endDate"];
+	 $tournament["maxPlayers"] = $row["maxPlayers"];
         
-        $sql="SELECT P.email, P.name, P.phoneNumber, P.admin, TP.gamemaster FROM  `Player` P,  `TournamentPlayer` TP WHERE P.email = TP.email
+        $sql="SELECT P.email, P.name, P.phoneNumber, P.admin, TP.gamemaster, TP.active FROM  `Player` P,  `TournamentPlayer` TP WHERE P.email = TP.email
                 AND TP.name = '";
-            $sql .=$row("name");
+            $sql .=$row["name"];
             $sql .="'";
-        
         
         $players = mysql_query($sql) or die(mysql_error());    
         $allPlayers=array();
         while($rowPlayer = mysql_fetch_assoc($players)) {
-          //  $player= array();
-            //$player["name"] = $rowPlayer["name"];
-            //$player["email"] = $rowPlayer["email"];
-            //$player["phoneNumber"] = $rowPlayer["phoneNumber"];
-            //$player["password"] = $rowPlayer["password"];
-            //$player["admin"] = $rowPlayer["admin"];
-             $allPlayers[] = $rowPlayer;
-            //array_push($response["allPlayers"], $player);
-             
-              
-        } 
+             $allPlayers[] = $rowPlayer;       
+        }
         $tournament["players"]=$allPlayers;
-      
+        
+        $sqlMatch="SELECT * FROM `Match` WHERE tournamentName ='";
+        $sqlMatch.=$row["name"];
+        $sqlMatch.="'";
+        
+        $matches=mysql_query($sqlMatch) or die(mysql_error());
+        $allMatches=array();
+        while($rowMatch=mysql_fetch_assoc($matches)) {
+            $allMatches[]=$rowMatch;
+        }
+        $tournament["matches"]=$allMatches;
+        
         // push single player into final response array
         array_push($response["tournaments"], $tournament);
     }

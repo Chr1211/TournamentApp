@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,14 +12,18 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
+import service.Service;
+
 public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
+	private static Service service;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		service = Service.getInstance();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -60,7 +65,7 @@ public class MainFrame extends JFrame {
 				mtf.setVisible(true);
 			}
 		});
-		btnAdministrerTurnering.setBounds(12, 51, 173, 25);
+		btnAdministrerTurnering.setBounds(12, 94, 173, 25);
 		contentPane.add(btnAdministrerTurnering);
 
 		JButton btnEksisterendeTurneringer = new JButton("Existing tournaments");
@@ -70,17 +75,26 @@ public class MainFrame extends JFrame {
 				etf.setVisible(true);
 			}
 		});
-		btnEksisterendeTurneringer.setBounds(12, 89, 173, 25);
+		btnEksisterendeTurneringer.setBounds(12, 132, 173, 25);
 		contentPane.add(btnEksisterendeTurneringer);
 
 		JButton btnAdministrerBrugere = new JButton("Manage users");
 		btnAdministrerBrugere.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ManageUsersFrame muf = new ManageUsersFrame();
-				muf.setVisible(true);
+//				ManageUsersFrame muf;
+				try {
+//					service.loadPlayers();
+					ManageUsersFrame muf = new ManageUsersFrame();
+					muf.setVisible(true);
+					
+					} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
-		btnAdministrerBrugere.setBounds(12, 195, 173, 25);
+		btnAdministrerBrugere.setBounds(12, 231, 173, 25);
 		contentPane.add(btnAdministrerBrugere);
 
 		JTextArea textArea = new JTextArea();
@@ -90,6 +104,11 @@ public class MainFrame extends JFrame {
 		JButton btnLogUd = new JButton("Log out");
 		btnLogUd.setBounds(364, 248, 97, 25);
 		contentPane.add(btnLogUd);
+		btnLogUd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
 		
 		JButton btnProfileSettings = new JButton("Profile settings");
 		btnProfileSettings.addActionListener(new ActionListener() {
@@ -98,17 +117,18 @@ public class MainFrame extends JFrame {
 				psf.setVisible(true);
 			}
 		});
-		btnProfileSettings.setBounds(12, 131, 173, 25);
+		btnProfileSettings.setBounds(12, 170, 173, 25);
 		contentPane.add(btnProfileSettings);
-		btnLogUd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//IKKE SIKKERT DET ER HIDE DER SKAL BRUGES:
-				MainFrame.this.hide();
-
+		
+		JButton btnCreateNewPlayer = new JButton("Create new Player");
+		btnCreateNewPlayer.setBounds(12, 56, 173, 25);
+		contentPane.add(btnCreateNewPlayer);
+		btnCreateNewPlayer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CreateNewPlayerFrame cnpf = new CreateNewPlayerFrame();
+				cnpf.setVisible(true);
 			}
 		});
+		
 	}
-
-
-
 }

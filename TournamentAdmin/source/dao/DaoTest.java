@@ -2,6 +2,7 @@ package dao;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Tournament;
@@ -17,11 +18,11 @@ public class DaoTest {
 	@Before
 	public void setup(){
 		ArrayList<Tournament> tournaments = new ArrayList<Tournament>();
-		tournament = new Tournament("HenningAllStars", null, null, null, null,1);
+		tournament = new Tournament("HenningAllStars", null, null, null, null,null, null, 1);
 	}
 	
 	@Test
-	public void createTournament() {
+	public void createTournament() throws SQLException {
 		Dao dao = new Dao();
 		dao.createTournament(tournament);
 		//se om tournaments size > 0 

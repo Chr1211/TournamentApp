@@ -5,22 +5,31 @@ import java.util.Date;
 import java.util.List;
 
 public class Tournament {
-	public String name, startDate, endDate;
+	public String name, startDate, endDate, specialRule;
 	public List<Player> players = new ArrayList<Player>();
 	public List<Match> matches = new ArrayList<Match>();
 	public List<Player> gamemasters = new ArrayList<Player>();
 	public int maxPlayers;
 
-	public Tournament(String name, List<Player> players, String startDate, String endDate,
+	public Tournament(String name, List<Player> players, String startDate, String endDate, String specialRule,
 			List<Match> matches, List<Player> gamemasters, int maxPlayers) {
 		super();
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.specialRule = specialRule;
 		this.name = name;
 		this.players = players;
 		this.matches = matches;
 		this.gamemasters = gamemasters;
 		this.maxPlayers = maxPlayers;
+	}
+
+	public String getSpecialRule() {
+		return specialRule;
+	}
+
+	public void setSpecialRule(String specialRule) {
+		this.specialRule = specialRule;
 	}
 
 	public String getStartDate() {

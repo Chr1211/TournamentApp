@@ -10,8 +10,13 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import service.Service;
+import sun.security.util.Password;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.awt.Color;
 
 public class LoginFrame extends JFrame {
 
@@ -22,11 +27,13 @@ public class LoginFrame extends JFrame {
 	private JPanel contentPane;
 	private JTextField emailtxt;
 	private JTextField pwtxt;
+	private static Service service;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		service = Service.getInstance();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -50,18 +57,45 @@ public class LoginFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-
+		final JLabel lblLoginError = new JLabel("Login Error: Wrong Email or Password!");
+		lblLoginError.setForeground(Color.RED);
+		lblLoginError.setBounds(78, 127, 243, 16);
+		contentPane.add(lblLoginError);
+		lblLoginError.setVisible(false);
+		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
+			
+			
+			
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO 
-				MainFrame mf = new MainFrame();
-				mf.setVisible(true);
+				// TODO
+				try {
+					lblLoginError.setVisible(false);
+					if (service.logInPlayer(emailtxt.getText(), pwtxt.getText())) {
+						emailtxt.setText("");
+						pwtxt.setText("");
+						MainFrame mf = new MainFrame();
+						mf.setVisible(true);
+//						ManageUsersFrame muf = new ManageUsersFrame();
+//						muf.setVisible(true);
+						LoginFrame.this.dispose();
+					} else {
+						emailtxt.setText("");
+						pwtxt.setText("");
+						lblLoginError.setVisible(true);
+						
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 		});
 		btnLogin.setBounds(113, 153, 97, 25);
 		contentPane.add(btnLogin);
+		
 
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setBounds(78, 69, 56, 16);
@@ -80,13 +114,6 @@ public class LoginFrame extends JFrame {
 		pwtxt.setBounds(146, 95, 116, 22);
 		contentPane.add(pwtxt);
 		pwtxt.setColumns(10);
-
-//		if(emailtxt.getText().equals("") && pwtxt.getText().equals("")){
-//			btnLogin.setEnabled(false);
-//		} else {
-//			btnLogin.setEnabled(true);
-//		}
-
-
+		
 	}
 }

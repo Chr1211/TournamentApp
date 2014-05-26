@@ -21,8 +21,9 @@ public class CreateTournamentFrame extends JFrame {
 	private JTextField nametxt;
 	private JTextField startDatetxt;
 	private JTextField maxplayerstxt;
-	private JTextField textField;
+	private JTextField endDatetxt;
 	private static Service service;
+	private JTextField specialRuletxt;
 
 	/**
 	 * Launch the application.
@@ -67,23 +68,27 @@ public class CreateTournamentFrame extends JFrame {
 		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(12, 271, 97, 25);
 		contentPane.add(btnBack);
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		
 		JButton btnCreate = new JButton("Create");
 		btnCreate.setBounds(439, 271, 97, 25);
 		contentPane.add(btnCreate);
 		btnCreate.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					service.createNewTournament(nametxt.getText(), startDatetxt.getText(), textField.getText(), maxplayerstxt.getText());
+					service.createNewTournament(nametxt.getText(), startDatetxt.getText(), endDatetxt.getText(), specialRuletxt.getText(),  maxplayerstxt.getText());
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				nametxt.setText("");
 				startDatetxt.setText("");
-				textField.setText("");
+				endDatetxt.setText("");
 				maxplayerstxt.setText("");
 			}
 		});
@@ -111,10 +116,19 @@ public class CreateTournamentFrame extends JFrame {
 		lblEndDate.setBounds(12, 71, 74, 16);
 		contentPane.add(lblEndDate);
 		
-		textField = new JTextField();
-		textField.setBounds(94, 68, 198, 22);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		endDatetxt = new JTextField();
+		endDatetxt.setBounds(94, 68, 198, 22);
+		contentPane.add(endDatetxt);
+		endDatetxt.setColumns(10);
+		
+		JLabel lblSpecialRule = new JLabel("Special Rule:");
+		lblSpecialRule.setBounds(12, 129, 85, 16);
+		contentPane.add(lblSpecialRule);
+		
+		specialRuletxt = new JTextField();
+		specialRuletxt.setBounds(94, 126, 198, 22);
+		contentPane.add(specialRuletxt);
+		specialRuletxt.setColumns(10);
 	}
 
 }

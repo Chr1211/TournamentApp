@@ -6,25 +6,47 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.swing.JTextField;
 
-public class ManageUsersFrame extends JFrame {
+import com.sun.jmx.interceptor.DefaultMBeanServerInterceptor;
+
+import dao.Dao;
+import service.Service;
+import model.Player;
+import model.Tournament;
+
+public class ManageUsersFrame extends JFrame{
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField nametxt;
+	private JTextField emailtxt;
+	private JTextField phoneNumbertxt;
+	private JTextField passwordtxt;
+	private static JList list;
+	private DefaultListModel<Player> model;
+	private static Service service;
+	private static ArrayList<Player> players = new ArrayList<Player>();
+	
 
 	/**
 	 * Launch the application.
+	 * @throws SQLException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -39,8 +61,13 @@ public class ManageUsersFrame extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
 	 */
-	public ManageUsersFrame() {
+	public ManageUsersFrame() throws SQLException{
+		service = Service.getInstance();
+		service.loadPlayers();
+		players = service.getAllPlayers();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -52,13 +79,45 @@ public class ManageUsersFrame extends JFrame {
 		lblPlayers.setBounds(12, 13, 87, 16);
 		contentPane.add(lblPlayers);
 		
-		JList list = new JList();
+		
+		model = new DefaultListModel<Player>();
+		
+		list = new JList(model);
 		list.setBounds(12, 37, 159, 170);
 		contentPane.add(list);
+		JScrollPane scrollPane = new JScrollPane();
+		list.add(scrollPane);
+		
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list.addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+//			int i = list.getSelectedIndex();
+//			nametxt.setText(players.get(i).getName());
+//			emailtxt.setText(players.get(i).getEmail());
+//			phoneNumbertxt.setText(players.get(i).getPhoneNumber());
+//			passwordtxt.setText(players.get(i).getPassword());
+				
+			Player p=(Player) list.getSelectedValue();
+			if(p != null){
+			nametxt.setText(p.getName());
+			emailtxt.setText(p.getEmail());
+			phoneNumbertxt.setText(p.getPhoneNumber());
+			passwordtxt.setText(p.getPassword());
+			}
+			
+			}
+		});
+		
+
+		
+		
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				dispose();
 			}
 		});
 		btnBack.setBounds(12, 217, 97, 25);
@@ -67,42 +126,69 @@ public class ManageUsersFrame extends JFrame {
 		JButton btnSaveChanges = new JButton("Save Changes");
 		btnSaveChanges.setBounds(307, 217, 113, 25);
 		contentPane.add(btnSaveChanges);
+		btnSaveChanges.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					service.updatePlayer(nametxt.getText(), emailtxt.getText(), phoneNumbertxt.getText(), passwordtxt.getText());
+					updateJList();
+					ManageUsersFrame.this.dispose();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		
 		JLabel lblName = new JLabel("Name:");
 		lblName.setBounds(280, 13, 56, 16);
 		contentPane.add(lblName);
 		
-		textField = new JTextField();
-		textField.setBounds(280, 35, 140, 22);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		nametxt = new JTextField();
+		nametxt.setBounds(280, 35, 140, 22);
+		contentPane.add(nametxt);
+		nametxt.setColumns(10);
 		
 		JLabel lblEmail = new JLabel("Email:");
 		lblEmail.setBounds(280, 60, 56, 16);
 		contentPane.add(lblEmail);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(280, 81, 140, 22);
-		contentPane.add(textField_1);
-		textField_1.setColumns(10);
+		emailtxt = new JTextField();
+		emailtxt.setBounds(280, 81, 140, 22);
+		contentPane.add(emailtxt);
+		emailtxt.setColumns(10);
 		
 		JLabel lblPhonenumber = new JLabel("Phonenumber:");
 		lblPhonenumber.setBounds(280, 111, 97, 16);
 		contentPane.add(lblPhonenumber);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(280, 129, 140, 22);
-		contentPane.add(textField_2);
-		textField_2.setColumns(10);
+		phoneNumbertxt = new JTextField();
+		phoneNumbertxt.setBounds(280, 129, 140, 22);
+		contentPane.add(phoneNumbertxt);
+		phoneNumbertxt.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setBounds(280, 157, 81, 16);
 		contentPane.add(lblPassword);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(280, 175, 140, 22);
-		contentPane.add(textField_3);
-		textField_3.setColumns(10);
+		passwordtxt = new JTextField();
+		passwordtxt.setBounds(280, 175, 140, 22);
+		contentPane.add(passwordtxt);
+		passwordtxt.setColumns(10);
+		
+		updateJList();
 	}
+	
+	public void updateJList() throws SQLException{
+		model = new DefaultListModel<Player>();
+		for(Player player : players){
+			model.addElement(player);
+		}
+		list.setModel(model);
+		
+		list.setSelectedIndex(0);
+	}
+	
+	
+
 
 }
