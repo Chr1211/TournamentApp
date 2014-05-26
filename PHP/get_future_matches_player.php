@@ -23,7 +23,7 @@ if (isset($_GET['email'])) {
     
     
     // get a player from player table
-    $result = mysql_query("SELECT * FROM  `Match` WHERE  `player1Email` ='$email' OR  `player2Email` =  '$email' AND done =0");
+    $result = mysql_query("SELECT * FROM  `Match` WHERE  (`player1Email` ='$email' OR  `player2Email` =  '$email') AND done =0");
     
     if (!empty($result)) {
         // check for empty result

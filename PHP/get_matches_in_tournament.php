@@ -24,7 +24,7 @@ if (isset($_GET['name'])) {
     
     
     // get a player from player table
-    $result = mysql_query( "SELECT P1.MatchNumber, P1.name as p1Name, P2.name as p2Name, P1.dato FROM (SELECT M.`MatchNumber` , P.name, M.`dato` FROM  `Match` M,  `Player` P WHERE P.email = M.`player1Email` AND M.tournamentName ='$name') AS P1 INNER JOIN (SELECT M.`MatchNumber` , P.name FROM  `Match` M,  `Player` P WHERE P.email = M.`player2Email` AND M.tournamentName ='$name') AS P2 ON P2.MatchNumber = P1.MatchNumber");
+    $result = mysql_query( "SELECT P1.MatchNumber, P1.emailWinner, P1.name as p1Name, P2.name as p2Name, P1.dato FROM (SELECT M.`MatchNumber` , M.`emailWinner`, P.name, M.`dato` FROM  `Match` M,  `Player` P WHERE P.email = M.`player1Email` AND M.tournamentName ='$name') AS P1 INNER JOIN (SELECT M.`MatchNumber` , P.name FROM  `Match` M,  `Player` P WHERE P.email = M.`player2Email` AND M.tournamentName ='$name') AS P2 ON P2.MatchNumber = P1.MatchNumber");
     
     
     if (!empty($result)) {
@@ -38,6 +38,11 @@ if (isset($_GET['name'])) {
       		  $matches["p2Name"] = $row["p2Name"];
       		  $matches["dato"] = $row["dato"];
 		  $matches["MatchNumber"] = $row["MatchNumber"];
+
+		  $winner = $row["emailWinner"];
+		$nameResult = mysql_query ("SELECT name FROM  `Player` WHERE  `email` LIKE  '$winner'");
+		$nameRow = mysql_fetch_array($nameResult);
+		$matches["winner"] = $nameRow["name"];
  		array_push($response["matches"], $matches);
             }
             
