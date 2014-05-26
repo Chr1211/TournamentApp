@@ -118,16 +118,15 @@ public class Dao {
 		this.loggedInPlayer = loggedInPlayer;
 	}
 
-	private void writePlayer(ResultSet resultset) throws SQLException{
+	private void writePlayer(ResultSet resultSet) throws SQLException{
 		Player foundPlayer = null;
 		
-		while(resultset.next()){
-			System.out.println("derp");
-			String email = resultset.getString("email");
-			String name = resultset.getString("name");
-			String phoneNumber = resultset.getString("phoneNumber");
-			String password = resultset.getString("password");
-			int adminState = resultset.getInt("admin");
+		while(resultSet.next()){
+			String email = resultSet.getString("email");
+			String name = resultSet.getString("name");
+			String phoneNumber = resultSet.getString("phoneNumber");
+			String password = resultSet.getString("password");
+			int adminState = resultSet.getInt("admin");
 			boolean admin = false;
 			if(adminState != 0){
 				admin = true;
@@ -137,14 +136,44 @@ public class Dao {
 		}
 	}
 	
+	private void writeTournament(ResultSet resultSet) throws SQLException{
+		Tournament foundTournament = null;
+		while(resultSet.next()){
+			String name = resultSet.getString("name");
+			String startDate = resultSet.getString("startDate");
+			String endDate = resultSet.getString("endDate");
+			int maxPlayers = resultSet.getInt("maxPlayers");
+			String specialRule = resultSet.getString("variables");
+			
+			foundTournament = new Tournament(name, null, startDate, endDate, specialRule, null, null, maxPlayers);
+			tournaments.add(foundTournament);
+		}
+	}
+	
 	public void loadPlayers() throws SQLException{
-		players=new ArrayList<>();
+		players=new ArrayList<Player>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt", "SumProjekt","4semester");
 			statement= connect.createStatement();
 			resultSet = statement.executeQuery("SELECT * FROM sumProjekt.Player");
 			writePlayer(resultSet);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		connect.close();
+		statement.close();
+	}
+	
+	public void loadTournaments() throws SQLException{
+		tournaments = new ArrayList<Tournament>();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt", "SumProjekt","4semester");
+			statement = connect.createStatement();
+			resultSet = statement.executeQuery("SELECT * FROM sumProjekt.Tournament");
+			writeTournament(resultSet);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -181,6 +210,27 @@ public class Dao {
 		connect.close();
 		prepStatement.close();
 		
+	}
+	
+	public void updateTournament(String name, String startDate, String endDate, int maxPlayers, String specialRule) throws SQLException{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt", "SumProjekt","4semester");
+			prepStatement = connect.prepareStatement("UPDATE sumProjekt.Tournament SET name=?, startDate=?, endDate=?, maxPlayers=?, variables=? WHERE name=?");
+			prepStatement.setString(1, name);
+			prepStatement.setString(2, startDate);
+			prepStatement.setString(3, endDate);
+			prepStatement.setString(4, maxPlayers+"");
+			prepStatement.setString(5, specialRule);
+			prepStatement.setString(6, name);
+			prepStatement.executeUpdate();
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		connect.close();
+		prepStatement.close();
 	}
 	
 	public void addPlayerToTournament(String email, String name, int gamemaster) throws SQLException{

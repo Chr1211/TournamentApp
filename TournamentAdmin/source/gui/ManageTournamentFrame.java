@@ -123,7 +123,7 @@ public class ManageTournamentFrame extends JFrame {
 		btnSaveChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TODO
-				//updateTournament();
+				service.updateTournament(nametxt.getText(), startdatetxt.getText(), endDatetxt.getText(), maxplayerstxt.getText(), specialRuletxt.getText());
 //				Evt. dispose frame
 				updateJList();
 			}

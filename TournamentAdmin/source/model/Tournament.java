@@ -96,6 +96,10 @@ public class Tournament {
 		this.gamemasters = gamemasters;
 	}
 	
+	public String toString(){
+		return "Name: " + getName() + " Start Date: " + getStartDate() + " Special rules: " + getSpecialRule();
+	}
+	
 	
 
 }

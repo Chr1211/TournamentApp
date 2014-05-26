@@ -53,6 +53,10 @@ public class Service {
 		dao.updatePlayer(name, email, phoneNumber, password);
 	}
 	
+	public void updateTournament(String name, String startDate, String endDate,int maxPlayers, String specialRule) throws SQLException{
+		dao.updateTournament(name, startDate, endDate, maxPlayers, specialRule);
+	}
+	
 	public Player getLoggedInPlayer(){
 		return dao.getLoggedInPlayer();
 	}
