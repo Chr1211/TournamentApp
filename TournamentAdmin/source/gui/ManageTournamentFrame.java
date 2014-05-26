@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -35,6 +36,7 @@ public class ManageTournamentFrame extends JFrame {
 	private static JList list;
 	private DefaultListModel<Tournament> model;
 	private static ArrayList<Tournament> tournaments = new ArrayList<Tournament>();
+	private JTextField specialRuletxt;
 
 	/**
 	 * Launch the application.
@@ -62,7 +64,7 @@ public class ManageTournamentFrame extends JFrame {
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 479, 315);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -73,43 +75,43 @@ public class ManageTournamentFrame extends JFrame {
 		contentPane.add(lblTournaments);
 		
 		JLabel lblName = new JLabel("Name:");
-		lblName.setBounds(272, 13, 56, 16);
+		lblName.setBounds(272, 0, 56, 16);
 		contentPane.add(lblName);
 		
 		nametxt = new JTextField();
-		nametxt.setBounds(272, 31, 137, 22);
+		nametxt.setBounds(272, 13, 137, 22);
 		contentPane.add(nametxt);
 		nametxt.setColumns(10);
 		
 		JLabel lblStartDate = new JLabel("Start Date:");
-		lblStartDate.setBounds(272, 55, 82, 16);
+		lblStartDate.setBounds(272, 43, 82, 16);
 		contentPane.add(lblStartDate);
 		
 		startdatetxt = new JTextField();
-		startdatetxt.setBounds(272, 77, 137, 22);
+		startdatetxt.setBounds(272, 58, 137, 22);
 		contentPane.add(startdatetxt);
 		startdatetxt.setColumns(10);
 		
 		JLabel lblEndDate = new JLabel("End Date:");
-		lblEndDate.setBounds(272, 102, 68, 16);
+		lblEndDate.setBounds(272, 90, 68, 16);
 		contentPane.add(lblEndDate);
 		
 		endDatetxt = new JTextField();
-		endDatetxt.setBounds(272, 119, 137, 22);
+		endDatetxt.setBounds(272, 108, 137, 22);
 		contentPane.add(endDatetxt);
 		endDatetxt.setColumns(10);
 		
 		JLabel lblMaxPlayers = new JLabel("Max players:");
-		lblMaxPlayers.setBounds(272, 143, 82, 16);
+		lblMaxPlayers.setBounds(272, 131, 82, 16);
 		contentPane.add(lblMaxPlayers);
 		
 		maxplayerstxt = new JTextField();
-		maxplayerstxt.setBounds(272, 160, 137, 22);
+		maxplayerstxt.setBounds(272, 151, 137, 22);
 		contentPane.add(maxplayerstxt);
 		maxplayerstxt.setColumns(10);
 		
 		JButton btnBack = new JButton("Back");
-		btnBack.setBounds(12, 217, 97, 25);
+		btnBack.setBounds(12, 232, 97, 25);
 		contentPane.add(btnBack);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -118,19 +120,27 @@ public class ManageTournamentFrame extends JFrame {
 		});
 		
 		JButton btnSaveChanges = new JButton("Save Changes");
-		btnSaveChanges.setBounds(132, 217, 113, 25);
+		btnSaveChanges.setBounds(169, 232, 113, 25);
 		contentPane.add(btnSaveChanges);
 		btnSaveChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//TODO
-				service.updateTournament(nametxt.getText(), startdatetxt.getText(), endDatetxt.getText(), maxplayerstxt.getText(), specialRuletxt.getText());
+				try {
+					service.updateTournament(nametxt.getText(), startdatetxt.getText(), endDatetxt.getText(), Integer.parseInt(maxplayerstxt.getText()), specialRuletxt.getText());
+				} catch (NumberFormatException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 //				Evt. dispose frame
 				updateJList();
 			}
 		});
 		
 		JButton btnAddPlayers = new JButton("Add Players");
-		btnAddPlayers.setBounds(272, 217, 137, 25);
+		btnAddPlayers.setBounds(312, 232, 137, 25);
 		contentPane.add(btnAddPlayers);
 		
 		model = new DefaultListModel<Tournament>();
@@ -141,6 +151,15 @@ public class ManageTournamentFrame extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		list.add(scrollPane);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		JLabel lblSpecialRule = new JLabel("Special Rule:");
+		lblSpecialRule.setBounds(272, 179, 82, 16);
+		contentPane.add(lblSpecialRule);
+		
+		specialRuletxt = new JTextField();
+		specialRuletxt.setBounds(272, 197, 137, 22);
+		contentPane.add(specialRuletxt);
+		specialRuletxt.setColumns(10);
 		
 		list.addListSelectionListener(new ListSelectionListener() {
 			
