@@ -17,7 +17,7 @@ public class TournamentTest {
 	
 	@Before
 	public void setup(){
-		tournament1 = new Tournament("All Stars", null);
+		tournament1 = new Tournament("All Stars", null, null);
 		player1 = new Player("Emil", "Emil@gmail.com", "10203040", "emil123", true);
 		player2 = new Player("Christian", "Christian@gmail.com", "88776655", "Chr123", false);
 		match1 = new Match();

@@ -16,14 +16,14 @@ public class DaoTest {
 	private Tournament tournament;
 
 	@Before
-	public void setup(){
+	public void setup() throws SQLException{
 		ArrayList<Tournament> tournaments = new ArrayList<Tournament>();
 		tournament = new Tournament("HenningAllStars", null, null, null, null,null, null, 1);
 	}
 	
 	@Test
 	public void createTournament() throws SQLException {
-		Dao dao = new Dao();
+		Dao dao = Dao.getInstance();
 		dao.createTournament(tournament);
 		//se om tournaments size > 0 
 	}

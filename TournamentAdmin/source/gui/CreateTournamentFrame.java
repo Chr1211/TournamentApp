@@ -29,7 +29,6 @@ public class CreateTournamentFrame extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		service = Service.getInstance();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -46,6 +45,9 @@ public class CreateTournamentFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public CreateTournamentFrame() {
+		service = Service.getInstance();
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 566, 376);
 		contentPane = new JPanel();

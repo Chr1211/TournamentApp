@@ -81,7 +81,6 @@ public class JSONParser {
 			String line = null;
 			while ((line = reader.readLine()) != null) {
 				sb.append(line + "\n");
-				Log.d("STRING BUILDER","test?");
 			}
 			is.close();
 			
