@@ -14,6 +14,7 @@ public class Tournament {
 	public List<Player> gamemasters = new ArrayList<Player>();
 	public int maxPlayers;
 	public Service service;
+	public Player loggedInPlayer;
 
 	public Tournament(String name, List<Player> players, String startDate, String endDate, String specialRule,
 			List<Match> matches, List<Player> gamemasters, int maxPlayers) throws SQLException {
@@ -27,8 +28,9 @@ public class Tournament {
 		this.gamemasters = gamemasters;
 		this.maxPlayers = maxPlayers;
 		service = Service.getInstance();
-		gamemasters.add(service.getLoggedInPlayer());
-		service.addPlayerToTournament(service.getLoggedInPlayer().getEmail(), this.name, 1);
+		this.loggedInPlayer = service.getLoggedInPlayer();
+		gamemasters.add(loggedInPlayer);
+		service.addPlayerToTournament(loggedInPlayer.getEmail(), this.name, 1);
 	}
 
 	public String getSpecialRule() {
