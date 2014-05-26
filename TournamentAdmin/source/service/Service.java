@@ -52,5 +52,13 @@ public class Service {
 	public void updatePlayer(String name, String email, String phoneNumber, String password) throws SQLException{
 		dao.updatePlayer(name, email, phoneNumber, password);
 	}
+	
+	public Player getLoggedInPlayer(){
+		return dao.getLoggedInPlayer();
+	}
+	
+	public void addPlayerToTournament(String email, String name, int gamemaster) throws SQLException{
+		dao.addPlayerToTournament(email, name, gamemaster);
+	}
 
 }

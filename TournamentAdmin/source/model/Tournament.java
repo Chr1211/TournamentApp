@@ -1,8 +1,11 @@
 package model;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import service.Service;
 
 public class Tournament {
 	public String name, startDate, endDate, specialRule;
@@ -10,9 +13,10 @@ public class Tournament {
 	public List<Match> matches = new ArrayList<Match>();
 	public List<Player> gamemasters = new ArrayList<Player>();
 	public int maxPlayers;
+	public Service service;
 
 	public Tournament(String name, List<Player> players, String startDate, String endDate, String specialRule,
-			List<Match> matches, List<Player> gamemasters, int maxPlayers) {
+			List<Match> matches, List<Player> gamemasters, int maxPlayers) throws SQLException {
 		super();
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -22,6 +26,9 @@ public class Tournament {
 		this.matches = matches;
 		this.gamemasters = gamemasters;
 		this.maxPlayers = maxPlayers;
+		service = Service.getInstance();
+		gamemasters.add(service.getLoggedInPlayer());
+		service.addPlayerToTournament(service.getLoggedInPlayer().getEmail(), this.name, 1);
 	}
 
 	public String getSpecialRule() {

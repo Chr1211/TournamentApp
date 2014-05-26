@@ -2,6 +2,7 @@ package model;
 
 import static org.junit.Assert.*;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,13 +16,13 @@ public class TournamentTest {
 	}
 	
 	@Test
-	public void testName(){
+	public void testName() throws SQLException{
 		Tournament t = new Tournament("HenningAllStars", null, null, null, null,null, null, 1);
 		assertEquals("it fits!", "HenningAllStars", t.getName());
 	}
 	
 	@Test
-	public void addPlayers(){
+	public void addPlayers() throws SQLException{
 		Player p = new Player("Henning", null, null, null, false);
 		List<Player> list = new ArrayList<Player>();
 		Tournament t = new Tournament(null, list, null, null, null,null, list, 1);
@@ -38,7 +39,7 @@ public class TournamentTest {
 	}
 	
 	@Test
-	public void addMatches(){
+	public void addMatches() throws SQLException{
 		Player p = new Player("Henning", null, null, null, false);
 		Player p2 = new Player("Henriette", null, null, null, false);
 		List<Player> list = new ArrayList<Player>();
@@ -52,7 +53,7 @@ public class TournamentTest {
 		assertEquals("fits!", 1, t.getMatches().size());
 	}
 	@Test
-	public void addGameMasters(){
+	public void addGameMasters() throws SQLException{
 		Player p = new Player("Henning", null, null, null, false);
 		List<Player> list = new ArrayList<Player>();
 		Tournament t = new Tournament(null, null, null, null, null, null, list,1);
@@ -61,7 +62,7 @@ public class TournamentTest {
 		assertEquals(1, t.getGamemasters().size());
 	}
 	
-	public void testSpecialRule(){
+	public void testSpecialRule() throws SQLException{
 		Tournament t = new Tournament(null, null, null, null, null, null, null, 0);
 		assertNull(t.getSpecialRule());
 		assertNotNull(t.getSpecialRule());

@@ -110,6 +110,14 @@ public class Dao {
 		return foundPlayer;
 	}
 	
+	public Player getLoggedInPlayer() {
+		return loggedInPlayer;
+	}
+
+	public void setLoggedInPlayer(Player loggedInPlayer) {
+		this.loggedInPlayer = loggedInPlayer;
+	}
+
 	private void writePlayer(ResultSet resultset) throws SQLException{
 		Player foundPlayer = null;
 		
@@ -173,6 +181,23 @@ public class Dao {
 		connect.close();
 		prepStatement.close();
 		
+	}
+	
+	public void addPlayerToTournament(String email, String name, int gamemaster) throws SQLException{
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt", "SumProjekt","4semester");
+			prepStatement = connect.prepareStatement("insert into sumProjekt.TournamentPlayer values (?, ?, ?, 1)");
+			prepStatement.setString(1, email);
+			prepStatement.setString(2, name);
+			prepStatement.setString(3, gamemaster+"");
+			prepStatement.executeUpdate();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		connect.close();
+		prepStatement.close();
 	}
 	
 	
