@@ -266,12 +266,51 @@ public class Dao {
 			prepStatement.setString(2, name);
 			prepStatement.setString(3, gamemaster+"");
 			prepStatement.executeUpdate();
+			prepStatement.close();
+
+			boolean found=false;
+			
+			String sql="SELECT `player1Email`, `player2Email`, `MatchNumber` FROM `Match` WHERE `MatchNumber`<5 and `tournamentName`='"+name+"'";
+			System.out.println(sql);
+			statement = connect.createStatement();
+			resultSet=statement.executeQuery(sql);
+			String noPlayer="NoPlayer";
+			String playerEmail="";
+			
+			while (resultSet.next() && !found) {
+				String p1=resultSet.getString("player1Email");
+				String p2=resultSet.getString("player2Email");
+				
+				
+				
+				int matchNumber = resultSet.getInt("MatchNumber");
+				if (p1.equals(noPlayer)) {
+					playerEmail="player1Email";
+					found=true;
+				} 
+				else if (p2.equals(noPlayer)) {
+					playerEmail="player2Email";
+					found=true;
+				}
+				
+				if (found) {
+					System.out.println("true");
+					System.out.println(name + " " + matchNumber);
+					prepStatement=connect.prepareStatement("UPDATE `Match` SET "+ playerEmail + "=? WHERE `tournamentName`=? AND `MatchNumber`=?");
+					prepStatement.setString(1, email);
+					prepStatement.setString(2, name);
+					prepStatement.setString(3, matchNumber+"");
+					prepStatement.execute();
+				}
+			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		connect.close();
 		prepStatement.close();
+		connect.close();
+		
+		
 	}
 	
 	public void findLoggedInTournaments() throws SQLException{
