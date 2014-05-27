@@ -43,11 +43,11 @@ public class Dao {
 			connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt"
 		              , "SumProjekt","4semester");
 			prepStatement = connect.prepareStatement("insert into sumProjekt.Tournament values (?, ?, ?, ?, ?)");
-			prepStatement.setString(1, tournament.name);
-			prepStatement.setString(2, tournament.startDate);
-			prepStatement.setString(3, tournament.endDate);
-			prepStatement.setString(4, ""+tournament.maxPlayers);
-			prepStatement.setString(5, tournament.specialRule);
+			prepStatement.setString(1, tournament.getName());
+			prepStatement.setString(2, tournament.getStartDate());
+			prepStatement.setString(3, tournament.getEndDate());
+			prepStatement.setString(4, ""+tournament.getMaxPlayers());
+			prepStatement.setString(5, tournament.getSpecialRule());
 			prepStatement.executeUpdate();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -284,8 +284,6 @@ public class Dao {
 	
 	public ArrayList<Tournament> getAllLoggedInTournaments(){
 		return loggedInTournaments;
-	}
-	
-	
+	}	
 
 }
