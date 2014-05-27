@@ -23,7 +23,7 @@ if (isset($_GET['name'])) {
     
     
     
-    // get a player from player table
+    // get matches in a tournament from tournament name
     $result = mysql_query( "SELECT P1.MatchNumber, P1.emailWinner, P1.name as p1Name, P2.name as p2Name, P1.dato FROM (SELECT M.`MatchNumber` , M.`emailWinner`, P.name, M.`dato` FROM  `Match` M,  `Player` P WHERE P.email = M.`player1Email` AND M.tournamentName ='$name') AS P1 INNER JOIN (SELECT M.`MatchNumber` , P.name FROM  `Match` M,  `Player` P WHERE P.email = M.`player2Email` AND M.tournamentName ='$name') AS P2 ON P2.MatchNumber = P1.MatchNumber");
     
     
@@ -49,25 +49,20 @@ if (isset($_GET['name'])) {
            
             $response["success"] = 1;
 
-            
-            // $response["tournaments"] = $tournament;
-
-            
-
             // echoing JSON response
             echo json_encode($response);
         } else {
             // no playerfound
             $response["success"] = 0;
-            $response["message"] = "No player found indeni";
+            $response["message"] = "No match found";
 
             // echo no users JSON
             echo json_encode($response);
         }
     } else {
-        // no playerfound
+        // no match found
         $response["success"] = 0;
-        $response["message"] = $email;
+        $response["message"] = No match found;
 		
         // echo no users JSON
         echo json_encode($response);

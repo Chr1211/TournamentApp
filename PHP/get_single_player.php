@@ -46,7 +46,7 @@ if (isset($_GET["email"]) && isset($_GET["password"])) {
             // echoing JSON response
             echo json_encode($response);
         } else {
-            // no playerfound
+            // no player found
             $response["success"] = 0;
             $response["message"] = "No player found";
 
@@ -54,9 +54,9 @@ if (isset($_GET["email"]) && isset($_GET["password"])) {
             echo json_encode($response);
         }
     } else {
-        // no playerfound
+        // no player found
         $response["success"] = 0;
-        $response["message"] = "No playerfound";
+        $response["message"] = "No player found";
 
         // echo no users JSON
         echo json_encode($response);

@@ -20,7 +20,7 @@ $db = new DB_CONNECT();
 if (isset($_GET['email'])) {
     $email = $_GET['email'];
     
-    // get a player from player table
+    // get a tournament for player
     $result = mysql_query( "SELECT T.name, T.startDate, T.endDate, T.maxPlayers, T.variables FROM  `TournamentPlayer` TP,  `Tournament` T WHERE TP.name = T.name AND TP.email ='$email'");
    
     if (!empty($result)) {
@@ -39,25 +39,21 @@ if (isset($_GET['email'])) {
            
             $response["success"] = 1;
 
-            
-            // $response["tournaments"] = $tournament;
-
-            
-
             // echoing JSON response
             echo json_encode($response);
         } else {
-            // no playerfound
+            // no player found
             $response["success"] = 0;
-            $response["message"] = "No player found indeni";
+            $response["message"] = "No tournament found";
 
             // echo no users JSON
             echo json_encode($response);
         }
     } else {
-        // no playerfound
+        // no tournament found
         $response["success"] = 0;
-        $response["message"] = $email;
+        $response["message"] = "No tournament found";
+
 		
         // echo no users JSON
         echo json_encode($response);
