@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -15,6 +14,10 @@ import javax.swing.JTextArea;
 
 public class ExistingTournamentsFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
@@ -44,6 +47,7 @@ public class ExistingTournamentsFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		@SuppressWarnings("rawtypes")
 		JList tournamentList = new JList();
 		tournamentList.setBounds(12, 37, 206, 219);
 		contentPane.add(tournamentList);

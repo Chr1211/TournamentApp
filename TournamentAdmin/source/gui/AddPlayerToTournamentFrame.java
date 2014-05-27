@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
 
 import service.Service;
@@ -26,6 +25,7 @@ import model.Tournament;
 
 public class AddPlayerToTournamentFrame extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textSearch;
 	private Player currentPlayer;
@@ -65,7 +65,7 @@ public class AddPlayerToTournamentFrame extends JFrame {
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */
-	public AddPlayerToTournamentFrame(Tournament tournament) throws ClassNotFoundException, SQLException {
+	public AddPlayerToTournamentFrame(final Tournament tournament) throws ClassNotFoundException, SQLException {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 510, 422);
 		contentPane = new JPanel();
@@ -155,7 +155,7 @@ public class AddPlayerToTournamentFrame extends JFrame {
 		contentPane.add(textSearch);
 		textSearch.setColumns(10);
 		
-		JCheckBox chckbxGameMaster = new JCheckBox("GameMaster");
+		final JCheckBox chckbxGameMaster = new JCheckBox("GameMaster");
 		chckbxGameMaster.setBounds(113, 300, 113, 25);
 		contentPane.add(chckbxGameMaster);
 		

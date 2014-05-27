@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,27 +13,25 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 
-import model.Player;
 import model.Tournament;
 import service.Service;
 
 public class ManageTournamentFrame extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField nametxt;
 	private JTextField startdatetxt;
 	private JTextField endDatetxt;
 	private JTextField maxplayerstxt;
 	private static Service service;
-	private static JList list;
+	private static JList<Tournament> list;
 	private DefaultListModel<Tournament> model;
 	private static ArrayList<Tournament> tournaments = new ArrayList<Tournament>();
 	private JTextField specialRuletxt;
@@ -114,7 +111,7 @@ public class ManageTournamentFrame extends JFrame {
 
 		model = new DefaultListModel<Tournament>();
 
-		list = new JList(model);
+		list = new JList<Tournament>(model);
 		list.setBounds(12, 42, 198, 153);
 		contentPane.add(list);
 		JScrollPane scrollPane = new JScrollPane();

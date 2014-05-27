@@ -1,42 +1,39 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-import com.sun.jmx.interceptor.DefaultMBeanServerInterceptor;
-
-import dao.Dao;
-import service.Service;
 import model.Player;
-import model.Tournament;
+import service.Service;
 
 public class ManageUsersFrame extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField nametxt;
 	private JTextField emailtxt;
 	private JTextField phoneNumbertxt;
 	private JTextField passwordtxt;
-	private static JList list;
+	private static JList<Player> list;
 	private DefaultListModel<Player> model;
 	private static Service service;
 	private static ArrayList<Player> players = new ArrayList<Player>();
@@ -82,7 +79,7 @@ public class ManageUsersFrame extends JFrame{
 		
 		model = new DefaultListModel<Player>();
 		
-		list = new JList(model);
+		list = new JList<Player>(model);
 		list.setBounds(12, 37, 159, 170);
 		contentPane.add(list);
 		JScrollPane scrollPane = new JScrollPane();

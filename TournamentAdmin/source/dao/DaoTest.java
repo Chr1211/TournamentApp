@@ -1,7 +1,5 @@
 package dao;
 
-import static org.junit.Assert.*;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -17,6 +15,7 @@ public class DaoTest {
 
 	@Before
 	public void setup() throws SQLException{
+		@SuppressWarnings("unused")
 		ArrayList<Tournament> tournaments = new ArrayList<Tournament>();
 		tournament = new Tournament("HenningAllStars", null, null, null, null,null, null, 1);
 	}

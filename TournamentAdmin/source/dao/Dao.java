@@ -17,7 +17,6 @@ public class Dao {
 	private Connection connect;
 	private Statement statement = null;
 	private PreparedStatement prepStatement = null;
-	private Player currentlyLoggedIn = null;
 	private ResultSet resultSet = null;
 	private ArrayList<Player> players;
 	private ArrayList<Tournament> tournaments;
