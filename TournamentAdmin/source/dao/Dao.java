@@ -49,6 +49,14 @@ public class Dao {
 			prepStatement.setString(4, ""+tournament.getMaxPlayers());
 			prepStatement.setString(5, tournament.getSpecialRule());
 			prepStatement.executeUpdate();
+			
+			for (int i=1; i<=7; i++) {
+				String sql="INSERT INTO `Match`(`player1Email`, `player2Email`, `tournamentName`, `emailWinner`, `done`, `MatchNumber`, `dato`) VALUES ('NoPlayer','NoPlayer','" + tournament.getName() + "', '',0," + i + ",'')";
+				statement = connect.createStatement();
+				statement.execute(sql);						
+			}
+			
+			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
