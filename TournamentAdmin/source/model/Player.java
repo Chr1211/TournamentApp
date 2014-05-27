@@ -53,7 +53,7 @@ public class Player {
 	}
 	
 	public String toString(){
-		return "Name: " + name + "Email " + email;
+		return "Name: " + name + " Email " + email;
 	}
 
 }

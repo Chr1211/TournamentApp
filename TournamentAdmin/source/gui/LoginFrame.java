@@ -76,8 +76,6 @@ public class LoginFrame extends JFrame {
 						pwtxt.setText("");
 						MainFrame mf = new MainFrame();
 						mf.setVisible(true);
-//						ManageUsersFrame muf = new ManageUsersFrame();
-//						muf.setVisible(true);
 						LoginFrame.this.dispose();
 					} else {
 						emailtxt.setText("");

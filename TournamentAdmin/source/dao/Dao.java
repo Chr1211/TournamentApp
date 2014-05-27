@@ -28,6 +28,7 @@ public class Dao {
 	private Dao() {
 		this.players = new ArrayList<Player>();
 		this.tournaments = new ArrayList<Tournament>();
+		this.loggedInTournaments = new ArrayList<Tournament>();
 	}
 	
 	public static Dao getInstance(){
@@ -160,6 +161,7 @@ public class Dao {
 	}
 	
 	private void writeLoggedTournament(ResultSet resultSet) throws SQLException{
+		loggedInTournaments.clear();
 		Tournament foundTournament = null;
 		while(resultSet.next()){
 			String name = resultSet.getString("name");

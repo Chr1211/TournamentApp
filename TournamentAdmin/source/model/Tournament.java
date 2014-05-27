@@ -102,7 +102,7 @@ public class Tournament {
 	}
 	
 	public String toString(){
-		return "Name: " + getName() + " Start Date: " + getStartDate() + " Special rules: " + getSpecialRule();
+		return "Name: " + getName();
 	}
 	
 	public ArrayList<Match> setUpMatches(){
@@ -113,7 +113,6 @@ public class Tournament {
 		
 		return matches;
 	}
-	
-	
+
 
 }
