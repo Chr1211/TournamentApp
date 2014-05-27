@@ -9,6 +9,7 @@ public class Match {
 	private boolean done;
 	private Player winner;
 	private Date timestamp;
+	@SuppressWarnings("unused")
 	private int matchNumber;
 	
 	public Match(List<Player> players, Player winner, boolean done, int matchNumber,

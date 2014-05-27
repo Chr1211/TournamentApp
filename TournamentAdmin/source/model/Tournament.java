@@ -2,6 +2,7 @@ package model;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import service.Service;
@@ -12,7 +13,9 @@ public class Tournament {
 	private ArrayList<Match> matches = new ArrayList<Match>();
 	private List<Player> gamemasters = new ArrayList<Player>();
 	private int maxPlayers;
+	@SuppressWarnings("unused")
 	private Service service;
+	@SuppressWarnings("unused")
 	private Player loggedInPlayer;
 
 	public Tournament(String name, List<Player> players, String startDate, String endDate, String specialRule,

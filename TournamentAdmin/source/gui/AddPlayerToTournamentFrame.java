@@ -89,7 +89,7 @@ public class AddPlayerToTournamentFrame extends JFrame {
 		listTournamentPlayers.setModel(modelPlayersInTournament);
 		
 		modelAllplayers=new DefaultListModel<>();
-		FillModel(service.getPlayerNotInTournament(tournament.name), modelAllplayers);
+		FillModel(service.getPlayerNotInTournament(tournament.getName()), modelAllplayers);
 		listAllPlayers.setModel(modelAllplayers);
 		
 		
@@ -123,7 +123,7 @@ public class AddPlayerToTournamentFrame extends JFrame {
 					
 					
 					try {
-						service.addPlayerToTournament(playerEntry.getKey().getEmail(), tournament.name, gm);
+						service.addPlayerToTournament(playerEntry.getKey().getEmail(), tournament.getName(), gm);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
