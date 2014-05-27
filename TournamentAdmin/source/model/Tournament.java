@@ -99,9 +99,8 @@ public class Tournament {
 	}
 	
 	public String toString(){
-		return "Name: " + getName() + " Start Date: " + getStartDate() + " Special rules: " + getSpecialRule();
+		return "Name: " + getName();
 	}
-	
 	
 
 }

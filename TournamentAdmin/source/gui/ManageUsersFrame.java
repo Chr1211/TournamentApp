@@ -93,11 +93,6 @@ public class ManageUsersFrame extends JFrame{
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-//			int i = list.getSelectedIndex();
-//			nametxt.setText(players.get(i).getName());
-//			emailtxt.setText(players.get(i).getEmail());
-//			phoneNumbertxt.setText(players.get(i).getPhoneNumber());
-//			passwordtxt.setText(players.get(i).getPassword());
 				
 			Player p=(Player) list.getSelectedValue();
 			if(p != null){

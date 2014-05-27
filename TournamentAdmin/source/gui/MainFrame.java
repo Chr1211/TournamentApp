@@ -78,8 +78,15 @@ public class MainFrame extends JFrame {
 		JButton btnEksisterendeTurneringer = new JButton("Existing tournaments");
 		btnEksisterendeTurneringer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ExistingTournamentsFrame etf = new ExistingTournamentsFrame();
-				etf.setVisible(true);
+//				ExistingTournamentsFrame etf;
+				try {
+					ExistingTournamentsFrame etf = new ExistingTournamentsFrame();
+					etf.setVisible(true);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 		btnEksisterendeTurneringer.setBounds(12, 132, 173, 25);
