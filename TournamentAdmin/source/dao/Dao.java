@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Player;
 import model.Tournament;
@@ -16,7 +17,6 @@ public class Dao {
 	private Connection connect;
 	private Statement statement = null;
 	private PreparedStatement prepStatement = null;
-	private Player currentlyLoggedIn = null;
 	private ResultSet resultSet = null;
 	private ArrayList<Player> players;
 	private ArrayList<Tournament> tournaments;
@@ -44,12 +44,20 @@ public class Dao {
 			connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt"
 		              , "SumProjekt","4semester");
 			prepStatement = connect.prepareStatement("insert into sumProjekt.Tournament values (?, ?, ?, ?, ?)");
-			prepStatement.setString(1, tournament.name);
-			prepStatement.setString(2, tournament.startDate);
-			prepStatement.setString(3, tournament.endDate);
-			prepStatement.setString(4, ""+tournament.maxPlayers);
-			prepStatement.setString(5, tournament.specialRule);
+			prepStatement.setString(1, tournament.getName());
+			prepStatement.setString(2, tournament.getStartDate());
+			prepStatement.setString(3, tournament.getEndDate());
+			prepStatement.setString(4, ""+tournament.getMaxPlayers());
+			prepStatement.setString(5, tournament.getSpecialRule());
 			prepStatement.executeUpdate();
+			
+			for (int i=1; i<=7; i++) {
+				String sql="INSERT INTO `Match`(`player1Email`, `player2Email`, `tournamentName`, `emailWinner`, `done`, `MatchNumber`, `dato`) VALUES ('NoPlayer','NoPlayer','" + tournament.getName() + "', '',0," + i + ",'')";
+				statement = connect.createStatement();
+				statement.execute(sql);						
+			}
+			
+			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -288,6 +296,33 @@ public class Dao {
 		return loggedInTournaments;
 	}
 	
+	public List<Player> getPlayersNotInTournament(String name) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.jdbc.Driver");
+		connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt", "SumProjekt","4semester");
+		List<Player> players=new ArrayList<>();
+		prepStatement=connect.prepareStatement("SELECT p.email, p.name FROM  `Player` p WHERE p.email NOT IN (SELECT email FROM  `TournamentPlayer` WHERE name =?)");
+		prepStatement.setString(1, name);
+		resultSet=prepStatement.executeQuery();
+		while (resultSet.next()) {
+			Player p=new Player(resultSet.getString("name"), resultSet.getString("email"), null, null, false);
+			players.add(p);
+		}
+		
+		return players;
+	}
 	
-
+	public List<Player> getPlayersInTournament(String name) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.jdbc.Driver");
+		connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt", "SumProjekt","4semester");
+		List<Player> players=new ArrayList<>();
+		prepStatement=connect.prepareStatement("SELECT p.email, p.name FROM `Player` p, `TournamentPlayer` tp where tp.name=? and tp.email=p.email");
+		prepStatement.setString(1, name);
+		resultSet=prepStatement.executeQuery();
+		while (resultSet.next()) {
+			Player p=new Player(resultSet.getString("name"), resultSet.getString("email"), null, null, false);
+			players.add(p);
+		}
+		
+		return players;
+	}
 }

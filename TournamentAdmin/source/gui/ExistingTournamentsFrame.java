@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -27,6 +26,10 @@ import service.Service;
 
 public class ExistingTournamentsFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static Service service;
 	private DefaultListModel<Tournament> model;
@@ -76,6 +79,12 @@ public class ExistingTournamentsFrame extends JFrame {
 		model = new DefaultListModel<Tournament>();
 
 		tournamentList = new JList<Tournament>(model);
+
+		
+		@SuppressWarnings("rawtypes")
+		final
+		JList tournamentList = new JList();
+
 		tournamentList.setBounds(12, 37, 206, 219);
 		contentPane.add(tournamentList);
 		JScrollPane scrollPane = new JScrollPane();

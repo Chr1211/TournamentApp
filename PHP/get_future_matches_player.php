@@ -22,7 +22,7 @@ if (isset($_GET['email'])) {
     
     
     
-    // get a player from player table
+    // get a future matches for player
     $result = mysql_query("SELECT * FROM  `Match` WHERE  (`player1Email` ='$email' OR  `player2Email` =  '$email') AND done =0");
     
     if (!empty($result)) {
@@ -55,19 +55,14 @@ if (isset($_GET['email'])) {
             }
             
            
-            $response["success"] = 1;
-
-            
-            // $response["tournaments"] = $tournament;
-
-            
+            $response["success"] = 1;           
 
             // echoing JSON response
             echo json_encode($response);
         } else {
-            // no playerfound
+            // no match found
             $response["success"] = 0;
-            $response["message"] = "No player found indeni";
+            $response["message"] = "No match found";
 
             // echo no users JSON
             echo json_encode($response);

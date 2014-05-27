@@ -3,10 +3,13 @@ package gui;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Dictionary;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -22,14 +25,25 @@ import model.Tournament;
 
 public class AddPlayerToTournamentFrame extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textSearch;
 	private Player currentPlayer;
-	private List<Player> allPlayers;
-	private List<Player> tournamentPlayers;
 	private Map<Player, Boolean> playersToBeAdded;
 	private Service service;
+	
+	JList<Player> listAllPlayers;
+	JList<Player> listTournamentPlayers;
+	JLabel lblPlayers;
+	JLabel lblPlayersInTournament;
 
+	JButton btnAddPlayer;
+	JButton btnSaveChanges;
+	JButton btnCancelChanges;
+	Tournament tournament;
+	
+	DefaultListModel<Player> modelAllplayers;
+	DefaultListModel<Player> modelPlayersInTournament;
 	/**
 	 * Launch the application.
 	 */
@@ -48,8 +62,10 @@ public class AddPlayerToTournamentFrame extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
 	 */
-	public AddPlayerToTournamentFrame(Tournament tournament) {
+	public AddPlayerToTournamentFrame(final Tournament tournament) throws ClassNotFoundException, SQLException {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 510, 422);
 		contentPane = new JPanel();
@@ -57,33 +73,63 @@ public class AddPlayerToTournamentFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		service=Service.getInstance();
+		this.tournament=tournament;
+		playersToBeAdded=new HashMap<>();
 		
-		JList<Player> listAllPlayers = new JList<>();
+		listAllPlayers = new JList<>();
 		listAllPlayers.setBounds(25, 79, 189, 213);
 		getContentPane().add(listAllPlayers);
 		
-		JList<Player> listTournamentPlayers = new JList<>();
+		listTournamentPlayers = new JList<>();
 		listTournamentPlayers.setBounds(242, 42, 175, 248);
 		contentPane.add(listTournamentPlayers);
 		
-		JLabel lblPlayers = new JLabel("Players");
+		modelPlayersInTournament=new DefaultListModel<>();
+		FillModel(service.getPlayersInTournament(tournament.getName()), modelPlayersInTournament);
+		listTournamentPlayers.setModel(modelPlayersInTournament);
+		
+		modelAllplayers=new DefaultListModel<>();
+		FillModel(service.getPlayerNotInTournament(tournament.getName()), modelAllplayers);
+		listAllPlayers.setModel(modelAllplayers);
+		
+		
+		lblPlayers = new JLabel("Players");
 		lblPlayers.setBounds(25, 13, 56, 16);
 		contentPane.add(lblPlayers);
 		
-		JLabel lblPlayersInTournament = new JLabel("Players In tournament");
+		lblPlayersInTournament = new JLabel("Players In tournament");
 		lblPlayersInTournament.setBounds(242, 13, 126, 16);
 		contentPane.add(lblPlayersInTournament);
 		
-		JButton btnAddPlayer = new JButton("Add Player");
+		
+		
+		
+		btnAddPlayer = new JButton("Add Player");
 		
 		
 
 		btnAddPlayer.setBounds(71, 327, 126, 25);
 		contentPane.add(btnAddPlayer);
 		
-		JButton btnSaveChanges = new JButton("Save Changes");
+		btnSaveChanges = new JButton("Save Changes");
 		btnSaveChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				for (Entry<Player, Boolean> playerEntry: playersToBeAdded.entrySet()) {
+					int gm=0;
+					if (playerEntry.getValue()) {
+						gm=1;
+					}
+					
+					
+					try {
+						service.addPlayerToTournament(playerEntry.getKey().getEmail(), tournament.getName(), gm);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
 				
 				dispose();
 			}
@@ -91,7 +137,7 @@ public class AddPlayerToTournamentFrame extends JFrame {
 		btnSaveChanges.setBounds(290, 300, 126, 25);
 		contentPane.add(btnSaveChanges);
 		
-		JButton btnCancelChanges = new JButton("Cancel");
+		btnCancelChanges = new JButton("Cancel");
 		btnCancelChanges.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
@@ -109,22 +155,29 @@ public class AddPlayerToTournamentFrame extends JFrame {
 		contentPane.add(textSearch);
 		textSearch.setColumns(10);
 		
-		JCheckBox chckbxGameMaster = new JCheckBox("GameMaster");
+		final JCheckBox chckbxGameMaster = new JCheckBox("GameMaster");
 		chckbxGameMaster.setBounds(113, 300, 113, 25);
 		contentPane.add(chckbxGameMaster);
 		
 		btnAddPlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				currentPlayer=listAllPlayers.getSelectedValue();
 				if (currentPlayer!=null) {
 					currentPlayer=listAllPlayers.getSelectedValue();
 					Boolean isGameMaster=chckbxGameMaster.isSelected();
 					playersToBeAdded.put(currentPlayer, isGameMaster);
+					modelAllplayers.removeElement(currentPlayer);
+					modelPlayersInTournament.addElement(currentPlayer);
 					currentPlayer=null;
+					chckbxGameMaster.setSelected(false);
 				}
-				
-				chckbxGameMaster.setSelected(false);
-//				dispose();
 			}
 		});
+	}
+	
+	private void FillModel(List<Player> players, DefaultListModel<Player> model) {
+		for (Player p: players) {
+			model.addElement(p);
+		}
 	}
 }

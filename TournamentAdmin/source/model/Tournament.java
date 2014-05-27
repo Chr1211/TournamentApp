@@ -8,16 +8,18 @@ import java.util.List;
 import service.Service;
 
 public class Tournament {
-	public String name, startDate, endDate, specialRule;
-	public List<Player> players = new ArrayList<Player>();
-	public List<Match> matches = new ArrayList<Match>();
-	public List<Player> gamemasters = new ArrayList<Player>();
-	public int maxPlayers;
-	public Service service;
-	public Player loggedInPlayer;
+	private String name, startDate, endDate, specialRule;
+	private List<Player> players = new ArrayList<Player>();
+	private ArrayList<Match> matches = new ArrayList<Match>();
+	private List<Player> gamemasters = new ArrayList<Player>();
+	private int maxPlayers;
+	@SuppressWarnings("unused")
+	private Service service;
+	@SuppressWarnings("unused")
+	private Player loggedInPlayer;
 
 	public Tournament(String name, List<Player> players, String startDate, String endDate, String specialRule,
-			List<Match> matches, List<Player> gamemasters, int maxPlayers) throws SQLException {
+			ArrayList<Match> matches, List<Player> gamemasters, int maxPlayers) throws SQLException {
 		super();
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -27,6 +29,7 @@ public class Tournament {
 		this.matches = matches;
 		this.gamemasters = gamemasters;
 		this.maxPlayers = maxPlayers;
+		setUpMatches();
 //		service = Service.getInstance();
 //		this.loggedInPlayer = service.getLoggedInPlayer();
 ////		gamemasters.add(loggedInPlayer);
@@ -86,7 +89,7 @@ public class Tournament {
 		return matches;
 	}
 
-	public void setMatches(List<Match> matches) {
+	public void setMatches(ArrayList<Match> matches) {
 		this.matches = matches;
 	}
 
@@ -102,5 +105,14 @@ public class Tournament {
 		return "Name: " + getName();
 	}
 	
+	public ArrayList<Match> setUpMatches(){
+		matches=new ArrayList<>();
+		for(int i = 0; i < 7; i++){
+			matches.add(new Match(null, null, false,i+1, new Date()));
+		}
+		
+		return matches;
+	}
+
 
 }

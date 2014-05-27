@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,23 +16,22 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 
-import model.Player;
 import model.Tournament;
 import service.Service;
 
 public class ManageTournamentFrame extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField nametxt;
 	private JTextField startdatetxt;
 	private JTextField endDatetxt;
 	private JTextField maxplayerstxt;
 	private static Service service;
-	private static JList list;
+	private static JList<Tournament> list;
 	private DefaultListModel<Tournament> model;
 	private static ArrayList<Tournament> tournaments = new ArrayList<Tournament>();
 	private JTextField specialRuletxt;
@@ -113,7 +111,7 @@ public class ManageTournamentFrame extends JFrame {
 
 		model = new DefaultListModel<Tournament>();
 
-		list = new JList(model);
+		list = new JList<Tournament>(model);
 		list.setBounds(12, 42, 198, 153);
 		contentPane.add(list);
 		JScrollPane scrollPane = new JScrollPane();
@@ -168,6 +166,22 @@ public class ManageTournamentFrame extends JFrame {
 		});
 
 		JButton btnAddPlayers = new JButton("Add Players");
+		btnAddPlayers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Tournament t=(Tournament) list.getSelectedValue();
+				if (t!=null) {
+					AddPlayerToTournamentFrame aptt;
+					try {
+						aptt = new AddPlayerToTournamentFrame(t);
+						aptt.setVisible(true);
+					} catch (ClassNotFoundException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+			}
+		});
 		btnAddPlayers.setBounds(312, 232, 137, 25);
 		contentPane.add(btnAddPlayers);
 

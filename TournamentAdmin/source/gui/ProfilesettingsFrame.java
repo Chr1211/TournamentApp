@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -14,6 +13,7 @@ import java.awt.event.ActionEvent;
 
 public class ProfilesettingsFrame extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField nametxt;
 	private JTextField emailtxt;
