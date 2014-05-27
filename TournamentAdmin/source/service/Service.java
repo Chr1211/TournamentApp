@@ -2,6 +2,7 @@ package service;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import dao.Dao;
 import model.Player;
@@ -80,4 +81,13 @@ public class Service {
 		return dao.getAllLoggedInTournaments();
 	}
 
+	public List<Player> getPlayersInTournament(String name) throws ClassNotFoundException, SQLException {
+		return dao.getPlayersInTournament(name);
+	}
+	
+	public List<Player> getPlayerNotInTournament(String name) throws ClassNotFoundException, SQLException {
+		return dao.getPlayersNotInTournament(name);
+	}
+	
+	
 }

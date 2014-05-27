@@ -14,6 +14,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -168,6 +169,22 @@ public class ManageTournamentFrame extends JFrame {
 		});
 
 		JButton btnAddPlayers = new JButton("Add Players");
+		btnAddPlayers.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Tournament t=(Tournament) list.getSelectedValue();
+				if (t!=null) {
+					AddPlayerToTournamentFrame aptt;
+					try {
+						aptt = new AddPlayerToTournamentFrame(t);
+						aptt.setVisible(true);
+					} catch (ClassNotFoundException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+			}
+		});
 		btnAddPlayers.setBounds(312, 232, 137, 25);
 		contentPane.add(btnAddPlayers);
 
