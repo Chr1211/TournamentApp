@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Match;
 import model.Player;
 import model.Tournament;
 
@@ -22,6 +23,8 @@ public class Dao {
 	private ArrayList<Tournament> tournaments;
 	private ArrayList<Tournament> loggedInTournaments;
 	private Player loggedInPlayer = null;
+	private ArrayList<Match> matches;
+
 	private static Dao daoInstance;
 	
 	
@@ -29,6 +32,7 @@ public class Dao {
 		this.players = new ArrayList<Player>();
 		this.tournaments = new ArrayList<Tournament>();
 		this.loggedInTournaments = new ArrayList<Tournament>();
+		this.matches = new ArrayList<Match>();
 	}
 	
 	public static Dao getInstance(){
@@ -173,6 +177,32 @@ public class Dao {
 			foundTournament = new Tournament(name, null, startDate, endDate, specialRule, null, null, maxPlayers);
 			loggedInTournaments.add(foundTournament);
 		}
+	}
+	
+	private void writeMatches(ResultSet resultSet) throws SQLException{
+		matches.clear();
+		Match foundMatch = null;
+		while(resultSet.next()){
+			ArrayList<Player> matchPlayers = new ArrayList<Player>();
+			String tPlayer1 = resultSet.getString("player1Email");
+			String tPlayer2 = resultSet.getString("player2Email0");
+			Player player1 = new Player("", tPlayer1, null, null, false);
+			Player player2 = new Player("", tPlayer2, null, null, false);
+			matchPlayers.add(player1);
+			matchPlayers.add(player2);
+			String emailWinner = resultSet.getString("emailWinner");
+			Player winner = new Player("", emailWinner, null, null, false);
+			int isDone = resultSet.getInt("done");
+			boolean done = false;
+			if(isDone == 1){
+				done = true;
+			}
+			int matchNumber = resultSet.getInt("MatchNumber");
+			
+			foundMatch = new Match(matchPlayers, winner, done, matchNumber, null);
+			matches.add(foundMatch);
+		}
+		
 	}
 	
 	
@@ -392,5 +422,34 @@ public class Dao {
 		
 		connect.close();
 		
+	}
+	
+	public void getMatchesForTournament(String name) throws SQLException, ClassNotFoundException{
+		Class.forName("com.mysql.jdbc.Driver");
+		connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt", "SumProjekt","4semester");
+		prepStatement = connect.prepareStatement("SELECT * FROM sumProjekt.Match WHERE tournamentName=?");
+		prepStatement.setString(1, name);
+		resultSet = prepStatement.executeQuery();
+		writeMatches(resultSet);
+		
+		connect.close();
+		prepStatement.close();
+	}
+	
+	public void setMatchWinner(String email, String name, String matchNumber) throws ClassNotFoundException, SQLException{
+		Class.forName("com.mysql.jdbc.Driver");
+		connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt", "SumProjekt","4semester");
+		prepStatement = connect.prepareStatement("UPDATE Match SET emailWinner=?, done=1 WHERE name=? and MatchNumber=?");
+		prepStatement.setString(1, email);
+		prepStatement.setString(2, name);
+		prepStatement.setString(3, matchNumber);
+		prepStatement.executeUpdate();
+		
+		connect.close();
+		prepStatement.close();
+	}
+
+	public ArrayList<Match> getMatches() {
+		return matches;
 	}
 }
