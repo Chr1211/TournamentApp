@@ -24,6 +24,8 @@ import service.Service;
 
 public class ExistingTournamentsFrame extends JFrame {
 
+	
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static Service service;
 	private DefaultListModel<Tournament> model;

@@ -346,7 +346,9 @@ public class Dao {
 			Player p=new Player(resultSet.getString("name"), resultSet.getString("email"), null, null, false);
 			players.add(p);
 		}
-		
+
+		prepStatement.close();
+		connect.close();
 		return players;
 	}
 	
@@ -361,7 +363,34 @@ public class Dao {
 			Player p=new Player(resultSet.getString("name"), resultSet.getString("email"), null, null, false);
 			players.add(p);
 		}
-		
+		prepStatement.close();
+		connect.close();
 		return players;
+	}
+	
+	public void removePlayerInTournament(String email, String name) throws ClassNotFoundException, SQLException {
+		Class.forName("com.mysql.jdbc.Driver");
+		connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt", "SumProjekt","4semester");
+		prepStatement=connect.prepareStatement("DELETE FROM `TournamentPlayer` WHERE `email` =? AND `name` =?");
+		prepStatement.setString(1, email);
+		prepStatement.setString(2, name);
+		prepStatement.execute();
+		prepStatement.close();
+		// finde match og slette spilleren derfra hvis den ikke er done
+		//sætte noplayer til den deromtalte match(update)
+		prepStatement=connect.prepareStatement("UPDATE `Match` SET `player1Email`='NoPlayer' WHERE `done`=0 AND `player1Email`=? AND `tournamentName`=?");
+		prepStatement.setString(1, email);
+		prepStatement.setString(2, name);
+		prepStatement.execute();
+		prepStatement.close();
+		
+		prepStatement=connect.prepareStatement("UPDATE `Match` SET `player2Email`='NoPlayer' WHERE `done`=0 AND `player2Email`=? AND `tournamentName`=?");
+		prepStatement.setString(1, email);
+		prepStatement.setString(2, name);
+		prepStatement.execute();
+		prepStatement.close();
+		
+		connect.close();
+		
 	}
 }

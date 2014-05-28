@@ -89,5 +89,9 @@ public class Service {
 		return dao.getPlayersNotInTournament(name);
 	}
 	
+	public void removePlayerFromTournament(String email, String name) throws ClassNotFoundException, SQLException {
+		dao.removePlayerInTournament(email,name);
+	}
+	
 	
 }
