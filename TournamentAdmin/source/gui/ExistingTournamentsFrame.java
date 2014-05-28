@@ -116,6 +116,16 @@ public class ExistingTournamentsFrame extends JFrame {
 		});
 		btnBack.setBounds(12, 293, 97, 25);
 		contentPane.add(btnBack);
+		
+		JButton btnShowMatches = new JButton("Show matches");
+		btnShowMatches.setBounds(423, 293, 122, 25);
+		contentPane.add(btnShowMatches);
+		btnShowMatches.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ShowMatchesFrame smf = new ShowMatchesFrame();
+				smf.setVisible(true);
+			}
+		});
 
 		updateJList();
 
@@ -141,6 +151,4 @@ public class ExistingTournamentsFrame extends JFrame {
 		}
 
 	}
-
-
 }
