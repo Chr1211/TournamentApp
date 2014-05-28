@@ -39,6 +39,7 @@ if (isset($_GET['email'])) {
                 
 		$email1 = $row["player1Email"];
       		$email2 = $row["player2Email"];
+                $emailWinner = $row["emailWinner"];
                 
                 
                 $name1 = mysql_query("SELECT name FROM  `Player` WHERE  `email` like '$email1'");
@@ -48,6 +49,10 @@ if (isset($_GET['email'])) {
                 $name2 = mysql_query("SELECT name FROM  `Player` WHERE  `email` like '$email2'");
                 $name2Row=mysql_fetch_array($name2);
                 $matches["nameP2"]=$name2Row["name"];
+                
+                $emailWinner = mysql_query("SELECT name FROM  `Player` WHERE  `email` like '$winner'");
+                $nameWinnerRow=mysql_fetch_array($emailWinner);
+                $matches["winner"]=$nameWinnerRow["name"];
                 
                 
                 

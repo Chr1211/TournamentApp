@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ public class AddPlayerToTournamentFrame extends JFrame {
 	private JTextField textSearch;
 	private Player currentPlayer;
 	private Map<Player, Boolean> playersToBeAdded;
+	private List<Player> playersToBeRemoved;
 	private Service service;
 	
 	JList<Player> listAllPlayers;
@@ -40,6 +42,7 @@ public class AddPlayerToTournamentFrame extends JFrame {
 	JButton btnAddPlayer;
 	JButton btnSaveChanges;
 	JButton btnCancelChanges;
+	JButton btnRemPlayer;
 	Tournament tournament;
 	
 	DefaultListModel<Player> modelAllplayers;
@@ -75,6 +78,7 @@ public class AddPlayerToTournamentFrame extends JFrame {
 		service=Service.getInstance();
 		this.tournament=tournament;
 		playersToBeAdded=new HashMap<>();
+		playersToBeRemoved = new ArrayList<Player>();
 		
 		listAllPlayers = new JList<>();
 		listAllPlayers.setBounds(25, 79, 189, 213);
@@ -105,10 +109,7 @@ public class AddPlayerToTournamentFrame extends JFrame {
 		
 		
 		btnAddPlayer = new JButton("Add Player");
-		
-		
-
-		btnAddPlayer.setBounds(71, 327, 126, 25);
+		btnAddPlayer.setBounds(25, 327, 126, 25);
 		contentPane.add(btnAddPlayer);
 		
 		btnSaveChanges = new JButton("Save Changes");
@@ -125,6 +126,15 @@ public class AddPlayerToTournamentFrame extends JFrame {
 					try {
 						service.addPlayerToTournament(playerEntry.getKey().getEmail(), tournament.getName(), gm);
 					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+				for (Player player: playersToBeRemoved){
+					try {
+						service.removePlayerFromTournament(player.getEmail(),tournament.getName());
+					} catch (ClassNotFoundException | SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -158,6 +168,23 @@ public class AddPlayerToTournamentFrame extends JFrame {
 		final JCheckBox chckbxGameMaster = new JCheckBox("GameMaster");
 		chckbxGameMaster.setBounds(113, 300, 113, 25);
 		contentPane.add(chckbxGameMaster);
+		
+		JButton btnNewButton = new JButton("Remove player");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				currentPlayer=listTournamentPlayers.getSelectedValue();
+				if(playersToBeAdded.remove(currentPlayer)==null){
+				playersToBeRemoved.add(currentPlayer);				
+				}
+				
+				modelPlayersInTournament.removeElement(currentPlayer);
+				modelAllplayers.addElement(currentPlayer);
+				
+
+			}
+		});
+		btnNewButton.setBounds(161, 328, 120, 23);
+		contentPane.add(btnNewButton);
 		
 		btnAddPlayer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

@@ -62,7 +62,7 @@ if (isset($_GET['name'])) {
     } else {
         // no match found
         $response["success"] = 0;
-        $response["message"] = No match found;
+        $response["message"] = "No match found";
 		
         // echo no users JSON
         echo json_encode($response);

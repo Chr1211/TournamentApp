@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.Dao;
+import model.Match;
 import model.Player;
 import model.Tournament;
 
@@ -87,6 +88,22 @@ public class Service {
 	
 	public List<Player> getPlayerNotInTournament(String name) throws ClassNotFoundException, SQLException {
 		return dao.getPlayersNotInTournament(name);
+	}
+	
+	public void removePlayerFromTournament(String email, String name) throws ClassNotFoundException, SQLException {
+		dao.removePlayerInTournament(email,name);
+	}
+	
+	public void getTournamentMatches(String name) throws ClassNotFoundException, SQLException{
+		dao.getMatchesForTournament(name);
+	}
+	
+	public void setMatchWinner(String email, String name, String matchNumber) throws ClassNotFoundException, SQLException{
+		dao.setMatchWinner(email, name, matchNumber);
+	}
+	
+	public ArrayList<Match> getMatches(){
+		return dao.getMatches();
 	}
 	
 	
