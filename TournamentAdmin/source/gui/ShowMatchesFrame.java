@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -11,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -20,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import model.Match;
+import model.Player;
 import service.Service;
 
 public class ShowMatchesFrame extends JFrame {
@@ -29,7 +32,10 @@ public class ShowMatchesFrame extends JFrame {
 	private DefaultListModel<Match> model;
 	private static ArrayList<Match> matches = new ArrayList<Match>();
 	private JList<Match> matchList;
+	private String[] playersInMatch;
 	private JComboBox comboBox;
+	private Match selectedMatch;
+	private DefaultComboBoxModel<String> cbxModel;
 
 	/**
 	 * Launch the application.
@@ -50,9 +56,12 @@ public class ShowMatchesFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public ShowMatchesFrame() {
 		service = Service.getInstance();
-		//		matches = service.getAllMatches();
+		playersInMatch = new String[2];
+		matches = service.getMatches();
+		selectedMatch = null;
 
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,24 +79,28 @@ public class ShowMatchesFrame extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		matchList.add(scrollPane);
 		matchList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+		playersInMatch = new String[2];
 		matchList.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
-				if(matchList.getSelectedIndex() != -1 && matches.size() > 0){
+				
+				selectedMatch = null;
+				if(matchList.getSelectedIndex() != -1){
 					int index = matchList.getSelectedIndex();
-					
-					
-					
-					
-				}
+					selectedMatch = matches.get(index);
+					cbxModel.removeAllElements();
+					cbxModel.addElement(selectedMatch.getPlayers().get(0).getEmail());
+					cbxModel.addElement(selectedMatch.getPlayers().get(1).getEmail());
+					}
 			}
 		});
-
+		cbxModel=new DefaultComboBoxModel<>();
 		comboBox = new JComboBox();
-		comboBox.setBounds(251, 35, 149, 25);
-		contentPane.add(comboBox);
 
+		comboBox.setBounds(251, 35, 149, 25);
+		comboBox.setModel(cbxModel);
+		contentPane.add(comboBox);
+		
 		JButton btnBack = new JButton("Back");
 		btnBack.setBounds(12, 217, 97, 25);
 		contentPane.add(btnBack);
@@ -103,7 +116,20 @@ public class ShowMatchesFrame extends JFrame {
 		contentPane.add(btnSelectWinner);
 		btnSelectWinner.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//				TODO
+				
+				String winner = comboBox.getSelectedItem().toString();
+				try {
+					service.setMatchWinner(winner, selectedMatch.getmatchId(), selectedMatch.getMatchNumber() + "");
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			
+				
 			}
 		});
 
@@ -125,9 +151,6 @@ public class ShowMatchesFrame extends JFrame {
 		}
 		matchList.setModel(model);
 		matchList.setSelectedIndex(0);
-		//		if(matches.size() > 0){
-		//			matchList.setSelectedIndex(0);
-		//		}
 
 	}
 

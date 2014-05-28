@@ -108,7 +108,7 @@ public class Tournament {
 	public ArrayList<Match> setUpMatches(){
 		matches=new ArrayList<>();
 		for(int i = 0; i < 7; i++){
-			matches.add(new Match(null, null, false,i+1, new Date()));
+			matches.add(new Match(null, null, false,i+1, null));
 		}
 		
 		return matches;

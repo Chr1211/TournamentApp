@@ -8,18 +8,26 @@ public class Match {
 	private List<Player> players = new ArrayList<Player>();
 	private boolean done;
 	private Player winner;
-	private Date timestamp;
+	private String matchId;
 	@SuppressWarnings("unused")
 	private int matchNumber;
 	
 	public Match(List<Player> players, Player winner, boolean done, int matchNumber,
-			Date timestamp) {
+			String matchId) {
 		super();
 		this.players = players;
 		this.winner = winner;
 		this.done = done;
 		this.matchNumber = matchNumber;
-		this.timestamp = timestamp;
+		this.matchId = matchId;
+	}
+
+	public int getMatchNumber() {
+		return matchNumber;
+	}
+
+	public void setMatchNumber(int matchNumber) {
+		this.matchNumber = matchNumber;
 	}
 
 	public List<Player> getPlayers() {
@@ -46,12 +54,16 @@ public class Match {
 		this.done = done;
 	}
 
-	public Date getTimestamp() {
-		return timestamp;
+	public String getmatchId() {
+		return matchId;
 	}
 
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
+	public void setmatchId(String matchId) {
+		this.matchId = matchId;
+	}
+	
+	public String toString(){
+		return "Match Number: " + matchNumber;
 	}
 	
 	

@@ -184,8 +184,9 @@ public class Dao {
 		Match foundMatch = null;
 		while(resultSet.next()){
 			ArrayList<Player> matchPlayers = new ArrayList<Player>();
+			String matchId = resultSet.getString("matchID");
 			String tPlayer1 = resultSet.getString("player1Email");
-			String tPlayer2 = resultSet.getString("player2Email0");
+			String tPlayer2 = resultSet.getString("player2Email");
 			Player player1 = new Player("", tPlayer1, null, null, false);
 			Player player2 = new Player("", tPlayer2, null, null, false);
 			matchPlayers.add(player1);
@@ -199,7 +200,7 @@ public class Dao {
 			}
 			int matchNumber = resultSet.getInt("MatchNumber");
 			
-			foundMatch = new Match(matchPlayers, winner, done, matchNumber, null);
+			foundMatch = new Match(matchPlayers, winner, done, matchNumber, matchId);
 			matches.add(foundMatch);
 		}
 		
@@ -436,12 +437,12 @@ public class Dao {
 		prepStatement.close();
 	}
 	
-	public void setMatchWinner(String email, String name, String matchNumber) throws ClassNotFoundException, SQLException{
+	public void setMatchWinner(String email, String matchId, String matchNumber) throws ClassNotFoundException, SQLException{
 		Class.forName("com.mysql.jdbc.Driver");
 		connect = DriverManager.getConnection("jdbc:mysql://sighvatur.dk:3306/sumProjekt", "SumProjekt","4semester");
-		prepStatement = connect.prepareStatement("UPDATE Match SET emailWinner=?, done=1 WHERE name=? and MatchNumber=?");
+		prepStatement = connect.prepareStatement("UPDATE `Match` SET `emailWinner`=?, done=1 WHERE `matchID`=? and `MatchNumber`=?");
 		prepStatement.setString(1, email);
-		prepStatement.setString(2, name);
+		prepStatement.setString(2, matchId);
 		prepStatement.setString(3, matchNumber);
 		prepStatement.executeUpdate();
 		

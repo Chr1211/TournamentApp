@@ -122,6 +122,16 @@ public class ExistingTournamentsFrame extends JFrame {
 		contentPane.add(btnShowMatches);
 		btnShowMatches.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					service.getTournamentMatches(existingTournaments.get(tournamentList.getSelectedIndex()).getName());
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				ShowMatchesFrame smf = new ShowMatchesFrame();
 				smf.setVisible(true);
 			}
