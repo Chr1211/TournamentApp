@@ -121,8 +121,6 @@ public class ManageTournamentFrame extends JFrame {
 
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
-				//TODO
-				//				Set tournament info i textfields!
 				Tournament t = (Tournament) list.getSelectedValue();
 				if(t != null){
 					nametxt.setText(t.getName());
